@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — LILYGOLD PLUS</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- React -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            deepBlack: '#0B0B0B',
+            gold: '#D4AF37',
+            goldLight: '#E8CC6E',
+            goldDark: '#B8972E',
+            darkGreen: '#0F3D2E',
+            offWhite: '#F5F5F5',
+            mutedWhite: '#A8A8A8',
+            cardBg: '#141414',
+            cardBorder: '#1F1F1F',
+          },
+          fontFamily: {
+            playfair: ['Playfair Display', 'serif'],
+            inter: ['Inter', 'sans-serif'],
+          },
+          keyframes: {
+            fadeInUp: {
+              '0%': { opacity: '0', transform: 'translateY(30px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+            goldPulse: {
+              '0%, 100%': { boxShadow: '0 0 20px rgba(212,175,55,0.3), 0 0 40px rgba(212,175,55,0.1)' },
+              '50%': { boxShadow: '0 0 30px rgba(212,175,55,0.5), 0 0 60px rgba(212,175,55,0.2)' },
+            },
+            goldPulseSoft: {
+              '0%, 100%': { boxShadow: '0 0 15px rgba(212,175,55,0.2)' },
+              '50%': { boxShadow: '0 0 25px rgba(212,175,55,0.4)' },
+            },
+            scaleIn: {
+              '0%': { opacity: '0', transform: 'scale(0.95)' },
+              '100%': { opacity: '1', transform: 'scale(1)' },
+            },
+            floatUp: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-6px)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            },
+          },
+          animation: {
+            fadeInUp: 'fadeInUp 0.8s ease-out forwards',
+            fadeIn: 'fadeIn 0.6s ease-out forwards',
+            goldPulse: 'goldPulse 3s ease-in-out infinite',
+            goldPulseSoft: 'goldPulseSoft 3s ease-in-out infinite',
+            scaleIn: 'scaleIn 0.6s ease-out forwards',
+            floatUp: 'floatUp 3s ease-in-out infinite',
+            shimmer: 'shimmer 3s ease-in-out infinite',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background: #0B0B0B; color: #F5F5F5; font-family: 'Inter', sans-serif; overflow-x: hidden; opacity: 0; transform: translateY(15px); transition: opacity 0.75s ease-out, transform 0.75s ease-out; }
+
+    body.page-loaded { opacity: 1; transform: translateY(0); }
+
+    .observe-fade { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .observe-fade.visible { opacity: 1; transform: translateY(0); }
+
+    .observe-scale { opacity: 0; transform: scale(0.95); transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    .observe-scale.visible { opacity: 1; transform: scale(1); }
+
+    .gold-gradient { background: linear-gradient(135deg, #D4AF37, #E8CC6E, #D4AF37); }
+    .gold-text-gradient { background: linear-gradient(135deg, #D4AF37, #E8CC6E, #D4AF37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .gold-border-gradient { border-image: linear-gradient(135deg, #D4AF37, #E8CC6E, #D4AF37) 1; }
+
+    .whatsapp-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .whatsapp-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transition: left 0.5s ease;
+    }
+    .whatsapp-btn:hover::before { left: 100%; }
+
+    .line-accent {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, #D4AF37, transparent);
+    }
+
+    .noise-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9999; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    .form-input {
+      background: #111;
+      border: 1px solid #222;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-input:focus {
+      border-color: #D4AF37;
+      box-shadow: 0 0 0 2px rgba(212,175,55,0.1);
+      outline: none;
+    }
+
+    .floating-wa {
+      animation: floatUp 3s ease-in-out infinite;
+    }
+
+    @media (max-width: 768px) {
+      .hero-heading { font-size: 2.5rem !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise-overlay"></div>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    /* ─── CONFIG ─── */
+    const WHATSAPP_NUMBER = '2348000000000';
+    const MSG_PRIMARY = encodeURIComponent("Hello, I'm interested in LILYGOLD PLUS products");
+    const MSG_FLOATING = encodeURIComponent("Hello, I want to order from LILYGOLD PLUS");
+    const WA_PRIMARY = `https://wa.me/${WHATSAPP_NUMBER}?text=${MSG_PRIMARY}`;
+    const WA_FLOATING = `https://wa.me/${WHATSAPP_NUMBER}?text=${MSG_FLOATING}`;
+
+    /* ─── HOOK: Intersection Observer ─── */
+    function useInView(options = {}) {
+      const ref = useRef(null);
+      const [isVisible, setVisible] = useState(false);
+      useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { setVisible(true); obs.unobserve(el); }
+        }, { threshold: 0.15, ...options });
+        obs.observe(el);
+        return () => obs.disconnect();
+      }, []);
+      return [ref, isVisible];
+    }
+
+    /* ─── SVG ICONS ─── */
+    const WhatsAppIcon = ({ size = 24, className = '' }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="currentColor"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.553 4.122 1.52 5.86L.06 23.496a.5.5 0 00.612.612l5.636-1.46A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.94 9.94 0 01-5.332-1.546l-.378-.228-3.334.864.892-3.248-.244-.392A9.94 9.94 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" fill="currentColor"/>
+      </svg>
+    );
+
+    const PhoneIcon = ({ size = 18 }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+      </svg>
+    );
+
+    const MailIcon = ({ size = 18 }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/>
+      </svg>
+    );
+
+    const ArrowRight = ({ size = 18 }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+      </svg>
+    );
+
+    const ShieldCheck = ({ size = 20 }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
+      </svg>
+    );
+
+    const ClockIcon = ({ size = 20 }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+      </svg>
+    );
+
+    const SendIcon = ({ size = 18 }) => (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    );
+
+    /* ─── NAVBAR ─── */
+    function Navbar() {
+      const [scrolled, setScrolled] = useState(false);
+      useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 30);
+        window.addEventListener('scroll', onScroll);
+        return () => window.removeEventListener('scroll', onScroll);
+      }, []);
+
+      return (
+        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-deepBlack/90 backdrop-blur-md border-b border-white/5' : 'bg-transparent'}`}>
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
+            <a href="#" className="font-playfair text-xl md:text-2xl tracking-wide">
+              <span className="gold-text-gradient font-semibold">LILYGOLD</span>
+              <span className="text-offWhite/60 font-light ml-1">PLUS</span>
+            </a>
+            <div className="hidden md:flex items-center gap-10">
+              {['Home', 'Collections', 'About', 'Contact'].map((item) => (
+                <a key={item} href="#" className={`font-inter text-xs tracking-[0.15em] uppercase transition-colors duration-300 ${item === 'Contact' ? 'text-gold' : 'text-mutedWhite hover:text-offWhite'}`}>
+                  {item}
+                </a>
+              ))}
+            </div>
+            <a href={WA_PRIMARY} target="_blank" rel="noopener noreferrer"
+               className="hidden md:flex items-center gap-2 text-xs tracking-[0.12em] uppercase text-gold border border-gold/30 px-5 py-2.5 rounded-full hover:bg-gold hover:text-deepBlack transition-all duration-300">
+              <WhatsAppIcon size={14} /> Chat
+            </a>
+          </div>
+        </nav>
+      );
+    }
+
+    /* ─── HERO SECTION ─── */
+    function HeroSection() {
+      const [ref, isVisible] = useInView();
+      return (
+        <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-deepBlack">
+          {/* Background decorative elements */}
+          <div className="absolute inset-0">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gold/[0.03] rounded-full blur-3xl"></div>
+            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-darkGreen/20 rounded-full blur-3xl"></div>
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent"></div>
+            <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/10 to-transparent"></div>
+          </div>
+
+          {/* Subtle grid pattern */}
+          <div className="absolute inset-0 opacity-[0.02]"
+               style={{ backgroundImage: 'linear-gradient(rgba(212,175,55,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.3) 1px, transparent 1px)', backgroundSize: '60px 60px' }}>
+          </div>
+
+          <div className={`relative z-10 text-center px-6 max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            {/* Label */}
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <div className="line-accent"></div>
+              <span className="font-inter text-[10px] tracking-[0.3em] uppercase text-gold/70">Get In Touch</span>
+              <div className="line-accent" style={{ transform: 'scaleX(-1)' }}></div>
+            </div>
+
+            {/* Heading */}
+            <h1 className="hero-heading font-playfair text-5xl md:text-7xl lg:text-8xl font-medium text-offWhite leading-[1.05] tracking-tight mb-6">
+              Speak With Us<br />
+              <span className="gold-text-gradient">Instantly</span>
+            </h1>
+
+            {/* Subtext */}
+            <p className="font-inter text-mutedWhite text-base md:text-lg font-light max-w-xl mx-auto mb-12 leading-relaxed">
+              Luxury service, one message away.
+            </p>
+
+            {/* Primary WhatsApp CTA */}
+            <a href={WA_PRIMARY} target="_blank" rel="noopener noreferrer"
+               className="whatsapp-btn animate-goldPulse inline-flex items-center gap-3 bg-gold text-deepBlack font-inter font-semibold text-sm md:text-base tracking-wide px-10 py-4 md:px-14 md:py-5 rounded-full hover:scale-105 active:scale-[0.98] transition-transform duration-300">
+              <WhatsAppIcon size={22} />
+              Chat on WhatsApp
+              <ArrowRight size={18} />
+            </a>
+
+            {/* Trust indicators */}
+            <div className="mt-14 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-10 text-mutedWhite/50">
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-gold/40" />
+                <span className="font-inter text-xs tracking-wide">Trusted Service</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <ClockIcon size={16} className="text-gold/40" />
+                <span className="font-inter text-xs tracking-wide">Quick Response</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-gold/40">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <span className="font-inter text-xs tracking-wide">Secure Orders</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Scroll hint */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fadeIn" style={{ animationDelay: '1.5s', opacity: 0 }}>
+            <span className="font-inter text-[9px] tracking-[0.25em] uppercase text-mutedWhite/30">Scroll</span>
+            <div className="w-px h-8 bg-gradient-to-b from-gold/30 to-transparent"></div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── WHATSAPP PRIMARY SECTION ─── */
+    function WhatsAppSection() {
+      const [ref, isVisible] = useInView();
+      return (
+        <section ref={ref} className="relative py-24 md:py-32 bg-deepBlack">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className={`observe-scale ${isVisible ? 'visible' : ''}`}>
+              {/* Card */}
+              <div className="relative bg-gradient-to-br from-cardBg to-deepBlack border border-gold/15 rounded-2xl md:rounded-3xl p-8 md:p-16 text-center overflow-hidden group hover:border-gold/30 transition-all duration-700">
+
+                {/* Decorative corner accents */}
+                <div className="absolute top-0 left-0 w-24 h-24 border-t border-l border-gold/20 rounded-tl-2xl md:rounded-tl-3xl"></div>
+                <div className="absolute bottom-0 right-0 w-24 h-24 border-b border-r border-gold/20 rounded-br-2xl md:rounded-br-3xl"></div>
+
+                {/* Glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-gold/[0.04] rounded-full blur-3xl group-hover:bg-gold/[0.07] transition-all duration-700"></div>
+
+                <div className="relative z-10">
+                  {/* WhatsApp icon */}
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-600/10 border border-green-500/20 mb-8 group-hover:scale-110 transition-transform duration-500">
+                    <WhatsAppIcon size={36} className="text-green-400" />
+                  </div>
+
+                  {/* Heading */}
+                  <h2 className="font-playfair text-3xl md:text-5xl text-offWhite mb-5 tracking-tight">
+                    Order Directly on <span className="gold-text-gradient">WhatsApp</span>
+                  </h2>
+
+                  {/* Text */}
+                  <p className="font-inter text-mutedWhite text-sm md:text-base font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Browse, ask questions, and place your orders directly with our team for a fast and seamless experience.
+                  </p>
+
+                  {/* Benefits row */}
+                  <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mb-10">
+                    {[
+                      { icon: '⚡', label: 'Instant Reply' },
+                      { icon: '📸', label: 'Product Images' },
+                      { icon: '📦', label: 'Easy Ordering' },
+                      { icon: '💰', label: 'Best Prices' },
+                    ].map((item) => (
+                      <div key={item.label} className="flex items-center gap-2 text-mutedWhite/70">
+                        <span className="text-base">{item.icon}</span>
+                        <span className="font-inter text-xs tracking-wide">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* CTA */}
+                  <a href={WA_PRIMARY} target="_blank" rel="noopener noreferrer"
+                     className="whatsapp-btn animate-goldPulseSoft inline-flex items-center gap-3 bg-gold text-deepBlack font-inter font-semibold text-sm md:text-base tracking-wide px-12 py-4 md:px-16 md:py-5 rounded-full hover:scale-105 active:scale-[0.98] transition-transform duration-300">
+                    <WhatsAppIcon size={20} />
+                    Start Chat
+                    <ArrowRight size={16} />
+                  </a>
+
+                  <p className="mt-5 font-inter text-[11px] text-mutedWhite/30 tracking-wide">
+                    Opens in WhatsApp — No download needed on mobile
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── QUICK CONTACT INFO ─── */
+    function QuickContact() {
+      const [ref, isVisible] = useInView();
+      return (
+        <section ref={ref} className="py-16 md:py-20 bg-deepBlack">
+          <div className={`max-w-3xl mx-auto px-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            <div className="flex items-center justify-center gap-3 mb-10">
+              <div className="line-accent"></div>
+              <span className="font-inter text-[10px] tracking-[0.3em] uppercase text-gold/50">Alternative Contact</span>
+              <div className="line-accent" style={{ transform: 'scaleX(-1)' }}></div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex items-center gap-4 p-5 rounded-xl border border-cardBorder bg-cardBg/50 hover:border-gold/15 transition-all duration-300">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gold/5 border border-gold/10 flex items-center justify-center text-gold/50">
+                  <PhoneIcon size={16} />
+                </div>
+                <div>
+                  <p className="font-inter text-[10px] tracking-[0.2em] uppercase text-mutedWhite/40 mb-0.5">Phone</p>
+                  <p className="font-inter text-sm text-offWhite/70">+234 800 000 0000</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-4 p-5 rounded-xl border border-cardBorder bg-cardBg/50 hover:border-gold/15 transition-all duration-300">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gold/5 border border-gold/10 flex items-center justify-center text-gold/50">
+                  <MailIcon size={16} />
+                </div>
+                <div>
+                  <p className="font-inter text-[10px] tracking-[0.2em] uppercase text-mutedWhite/40 mb-0.5">Email</p>
+                  <p className="font-inter text-sm text-offWhite/70">hello@lilygoldplus.com</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── TRUST / PRESENCE SECTION ─── */
+    function TrustSection() {
+      const [ref, isVisible] = useInView();
+      return (
+        <section ref={ref} className="py-20 md:py-28 bg-deepBlack">
+          <div className={`max-w-6xl mx-auto px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+              {/* Image */}
+              <div className="relative group">
+                <div className="relative overflow-hidden rounded-2xl">
+                  <img
+                    src="https://picsum.photos/seed/lilygold-building/800/600.jpg"
+                    alt="LILYGOLD PLUS Headquarters"
+                    className="w-full h-[300px] md:h-[420px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-deepBlack/60 via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 border border-gold/10 rounded-2xl"></div>
+                </div>
+                {/* Gold accent line */}
+                <div className="absolute -bottom-3 -right-3 w-20 h-20 border-b-2 border-r-2 border-gold/20 rounded-br-2xl"></div>
+              </div>
+
+              {/* Content */}
+              <div className="lg:pl-4">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-px bg-gold/40"></div>
+                  <span className="font-inter text-[10px] tracking-[0.3em] uppercase text-gold/60">Our Promise</span>
+                </div>
+
+                <h2 className="font-playfair text-3xl md:text-4xl text-offWhite tracking-tight mb-6 leading-tight">
+                  Built on Trust,<br />Defined by <span className="gold-text-gradient">Quality</span>
+                </h2>
+
+                <p className="font-inter text-mutedWhite text-sm md:text-base font-light leading-relaxed mb-8">
+                  LILYGOLD PLUS operates with a commitment to quality, trust, and premium service. Every interaction reflects our dedication to excellence and customer satisfaction.
+                </p>
+
+                <div className="grid grid-cols-2 gap-6">
+                  {[
+                    { num: '500+', label: 'Happy Clients' },
+                    { num: '100%', label: 'Authentic Items' },
+                    { num: '24hr', label: 'Response Time' },
+                    { num: '5★', label: 'Rated Service' },
+                  ].map((stat) => (
+                    <div key={stat.label} className="border-l border-gold/15 pl-4">
+                      <p className="font-playfair text-2xl text-gold mb-1">{stat.num}</p>
+                      <p className="font-inter text-[11px] tracking-wide text-mutedWhite/50">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── CONTACT FORM (DE-EMPHASIZED) ─── */
+    function ContactForm() {
+      const [ref, isVisible] = useInView();
+      const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+      const [submitted, setSubmitted] = useState(false);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setSubmitted(true);
+        setTimeout(() => setSubmitted(false), 4000);
+        setFormData({ name: '', email: '', message: '' });
+      };
+
+      return (
+        <section ref={ref} className="py-20 md:py-24 bg-deepBlack relative">
+          {/* Divider line */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent via-gold/15 to-transparent"></div>
+
+          <div className={`max-w-2xl mx-auto px-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            {/* Header */}
+            <div className="text-center mb-10">
+              <div className="flex items-center justify-center gap-3 mb-5">
+                <div className="line-accent"></div>
+                <span className="font-inter text-[10px] tracking-[0.3em] uppercase text-mutedWhite/30">Optional</span>
+                <div className="line-accent" style={{ transform: 'scaleX(-1)' }}></div>
+              </div>
+              <h3 className="font-playfair text-2xl md:text-3xl text-offWhite/70 tracking-tight mb-3">Send a Message</h3>
+              <p className="font-inter text-xs text-mutedWhite/30 flex items-center justify-center gap-2">
+                <WhatsAppIcon size={12} className="text-green-500/50" />
+                For faster response, please use WhatsApp
+              </p>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSubmit} className="space-y-4 opacity-60">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                  className="form-input w-full px-5 py-3.5 rounded-xl font-inter text-sm text-offWhite placeholder:text-mutedWhite/25"
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  required
+                  className="form-input w-full px-5 py-3.5 rounded-xl font-inter text-sm text-offWhite placeholder:text-mutedWhite/25"
+                />
+              </div>
+              <textarea
+                placeholder="Your Message"
+                rows={4}
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                required
+                className="form-input w-full px-5 py-3.5 rounded-xl font-inter text-sm text-offWhite placeholder:text-mutedWhite/25 resize-none"
+              ></textarea>
+
+              <button
+                type="submit"
+                className="w-full flex items-center justify-center gap-2 bg-cardBg border border-cardBorder text-mutedWhite/60 font-inter text-sm tracking-wide px-6 py-3.5 rounded-xl hover:border-gold/20 hover:text-offWhite transition-all duration-300"
+              >
+                <SendIcon size={14} />
+                {submitted ? 'Message Sent' : 'Send Message'}
+              </button>
+            </form>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── FINAL CTA SECTION ─── */
+    function FinalCTA() {
+      const [ref, isVisible] = useInView();
+      return (
+        <section ref={ref} className="relative py-24 md:py-32 overflow-hidden">
+          {/* Background */}
+          <div className="absolute inset-0 bg-darkGreen/30"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-deepBlack via-transparent to-deepBlack"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gold/[0.03] rounded-full blur-3xl"></div>
+
+          <div className={`relative z-10 text-center px-6 max-w-3xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <div className="line-accent"></div>
+              <div className="w-1.5 h-1.5 rounded-full bg-gold/60"></div>
+              <div className="line-accent" style={{ transform: 'scaleX(-1)' }}></div>
+            </div>
+
+            <h2 className="font-playfair text-4xl md:text-6xl text-offWhite tracking-tight mb-5 leading-tight">
+              Ready to Elevate<br />Your <span className="gold-text-gradient">Style</span>?
+            </h2>
+
+            <p className="font-inter text-mutedWhite text-sm md:text-base font-light max-w-lg mx-auto mb-12 leading-relaxed">
+              Join hundreds of satisfied customers who trust LILYGOLD PLUS for premium luxury products.
+            </p>
+
+            <a href={WA_PRIMARY} target="_blank" rel="noopener noreferrer"
+               className="whatsapp-btn animate-goldPulse inline-flex items-center gap-3 bg-gold text-deepBlack font-inter font-semibold text-sm md:text-base tracking-wide px-12 py-4 md:px-16 md:py-5 rounded-full hover:scale-105 active:scale-[0.98] transition-transform duration-300">
+              <WhatsAppIcon size={22} />
+              Chat on WhatsApp Now
+              <ArrowRight size={18} />
+            </a>
+          </div>
+        </section>
+      );
+    }
+
+    /* ─── FOOTER ─── */
+    function Footer() {
+      return (
+        <footer className="border-t border-white/5 bg-deepBlack">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 md:py-16">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+              <div className="text-center md:text-left">
+                <p className="font-playfair text-lg tracking-wide mb-1">
+                  <span className="gold-text-gradient font-semibold">LILYGOLD</span>
+                  <span className="text-offWhite/40 font-light ml-1">PLUS</span>
+                </p>
+                <p className="font-inter text-[11px] text-mutedWhite/30 tracking-wide">Premium Luxury Products</p>
+              </div>
+
+              <div className="flex items-center gap-8">
+                {['Instagram', 'Twitter', 'Facebook'].map((social) => (
+                  <a key={social} href="#" className="font-inter text-[11px] tracking-[0.1em] uppercase text-mutedWhite/30 hover:text-gold/60 transition-colors duration-300">
+                    {social}
+                  </a>
+                ))}
+              </div>
+
+              <p className="font-inter text-[11px] text-mutedWhite/20 tracking-wide">
+                © {new Date().getFullYear()} LILYGOLD PLUS
+              </p>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    /* ─── FLOATING WHATSAPP BUTTON ─── */
+    function FloatingWhatsApp() {
+      const [show, setShow] = useState(false);
+      const [tooltip, setTooltip] = useState(true);
+
+      useEffect(() => {
+        const timer = setTimeout(() => setShow(true), 1500);
+        return () => clearTimeout(timer);
+      }, []);
+
+      useEffect(() => {
+        if (!show) return;
+        const timer = setTimeout(() => setTooltip(false), 5000);
+        return () => clearTimeout(timer);
+      }, [show]);
+
+      if (!show) return null;
+
+      return (
+        <div className="fixed bottom-6 right-6 z-50 flex items-end gap-3">
+          {/* Tooltip */}
+          {tooltip && (
+            <div className="hidden sm:block animate-fadeIn bg-cardBg border border-gold/15 rounded-xl px-4 py-2.5 shadow-xl shadow-black/40 mb-2">
+              <p className="font-inter text-xs text-offWhite/80 whitespace-nowrap">Need help? Chat with us!</p>
+              <div className="absolute -right-1.5 bottom-4 w-3 h-3 bg-cardBg border-r border-b border-gold/15 rotate-[-45deg]"></div>
+            </div>
+          )}
+
+          {/* Button */}
+          <a href={WA_FLOATING} target="_blank" rel="noopener noreferrer"
+             className="floating-wa flex items-center justify-center w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/20 hover:shadow-xl hover:shadow-[#25D366]/30 hover:scale-110 active:scale-95 transition-all duration-300">
+            <WhatsAppIcon size={26} />
+          </a>
+        </div>
+      );
+    }
+
+    /* ─── MAIN APP ─── */
+    function App() {
+      return (
+        <React.Fragment>
+          <Navbar />
+          <HeroSection />
+          <WhatsAppSection />
+          <QuickContact />
+          <TrustSection />
+          <ContactForm />
+          <FinalCTA />
+          <Footer />
+          <FloatingWhatsApp />
+        </React.Fragment>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+    // Page transition
+    document.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        document.body.classList.add('page-loaded');
+      });
+    });
+  </script>
+</body>
+</html>

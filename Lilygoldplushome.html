@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LILYGOLD PLUS — Timeless Luxury. Elevated Style.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwindcss.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#0B0B0B',
+                            gold: '#D4AF37',
+                            goldLight: '#E8CC6E',
+                            goldDark: '#B8961F',
+                            emerald: '#0F3D2E',
+                            emeraldLight: '#1A5C45',
+                            beige: '#F5F5F5',
+                            beigeDark: '#E8E4DC',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0B0B0B;
+            color: #F5F5F5;
+            overflow-x: hidden;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+        }
+
+        body.page-loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0B0B; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 3px; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-80px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(80px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes goldPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(212,175,55,0.2); }
+            50% { box-shadow: 0 0 40px rgba(212,175,55,0.5); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes lineGrow {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .animate-on-scroll.slide-left {
+            transform: translateX(-80px);
+        }
+        .animate-on-scroll.slide-left.visible {
+            transform: translateX(0);
+        }
+        .animate-on-scroll.slide-right {
+            transform: translateX(80px);
+        }
+        .animate-on-scroll.slide-right.visible {
+            transform: translateX(0);
+        }
+        .animate-on-scroll.scale-up {
+            transform: scale(0.9);
+        }
+        .animate-on-scroll.scale-up.visible {
+            transform: scale(1);
+        }
+
+        .delay-100 { transition-delay: 0.1s !important; }
+        .delay-200 { transition-delay: 0.2s !important; }
+        .delay-300 { transition-delay: 0.3s !important; }
+        .delay-400 { transition-delay: 0.4s !important; }
+        .delay-500 { transition-delay: 0.5s !important; }
+        .delay-600 { transition-delay: 0.6s !important; }
+        .delay-700 { transition-delay: 0.7s !important; }
+
+        /* Hero Animations */
+        .hero-text-animate {
+            animation: fadeInUp 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            opacity: 0;
+        }
+        .hero-text-animate-1 { animation-delay: 0.3s; }
+        .hero-text-animate-2 { animation-delay: 0.6s; }
+        .hero-text-animate-3 { animation-delay: 0.9s; }
+        .hero-text-animate-4 { animation-delay: 1.2s; }
+
+        /* Gold Button */
+        .btn-gold {
+            background: linear-gradient(135deg, #D4AF37 0%, #E8CC6E 50%, #D4AF37 100%);
+            background-size: 200% auto;
+            color: #0B0B0B;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+            background-size: 200% auto;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .btn-gold:hover {
+            background-position: right center;
+            box-shadow: 0 0 30px rgba(212,175,55,0.4), 0 0 60px rgba(212,175,55,0.15);
+            transform: translateY(-2px);
+        }
+        .btn-gold:hover::before {
+            opacity: 1;
+            background-position: right center;
+        }
+
+        .btn-gold-outline {
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-gold-outline::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #D4AF37;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: -1;
+        }
+        .btn-gold-outline:hover {
+            color: #0B0B0B;
+            box-shadow: 0 0 20px rgba(212,175,55,0.3);
+        }
+        .btn-gold-outline:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Product Card */
+        .product-card {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .product-card .product-image {
+            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.08);
+        }
+        .product-card .product-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(11,11,11,0.9) 0%, rgba(15,61,46,0.4) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 2rem;
+        }
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+        .product-card .product-overlay .view-btn {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+        }
+        .product-card:hover .product-overlay .view-btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Parallax */
+        .parallax-section {
+            position: relative;
+            overflow: hidden;
+        }
+        .parallax-bg {
+            position: absolute;
+            inset: -20%;
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+
+        /* Gold Line */
+        .gold-line {
+            height: 1px;
+            background: linear-gradient(to right, transparent, #D4AF37, transparent);
+            animation: lineGrow 1.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            transform-origin: center;
+        }
+
+        /* Shimmer Text */
+        .shimmer-text {
+            background: linear-gradient(90deg, #D4AF37 0%, #E8CC6E 25%, #FFFFFF 50%, #E8CC6E 75%, #D4AF37 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
+        }
+
+        /* Navbar */
+        .navbar {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .navbar.scrolled {
+            background: rgba(11,11,11,0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212,175,55,0.1);
+        }
+
+        /* Value Card */
+        .value-card {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            border: 1px solid rgba(212,175,55,0.08);
+        }
+        .value-card:hover {
+            border-color: rgba(212,175,55,0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(212,175,55,0.05);
+        }
+        .value-card:hover .value-icon {
+            background: rgba(212,175,55,0.15);
+            border-color: rgba(212,175,55,0.4);
+        }
+        .value-card .value-icon {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Testimonial */
+        .testimonial-card {
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(212,175,55,0.25);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Section divider */
+        .section-divider {
+            background: linear-gradient(to right, transparent, rgba(212,175,55,0.2), transparent);
+            height: 1px;
+        }
+
+        /* Gradient overlay for hero */
+        .hero-gradient {
+            background: linear-gradient(
+                135deg,
+                rgba(11,11,11,0.85) 0%,
+                rgba(15,61,46,0.6) 40%,
+                rgba(11,11,11,0.75) 70%,
+                rgba(11,11,11,0.9) 100%
+            );
+        }
+
+        /* Star rating */
+        .star { color: #D4AF37; }
+
+        /* Floating badge */
+        .float-badge {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Image loading */
+        img {
+            transition: opacity 0.5s;
+        }
+        img[loading] {
+            opacity: 0;
+        }
+        img.loaded {
+            opacity: 1;
+        }
+
+        /* Cart count */
+        .cart-count {
+            font-size: 9px;
+            min-width: 16px;
+            height: 16px;
+            line-height: 16px;
+        }
+    </style>
+</head>
+<body class="pt-20">
+
+    <!-- ============ NAVBAR ============ -->
+    <nav id="navbar" class="navbar fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex items-center justify-between h-16 sm:h-20">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="font-serif text-xl sm:text-2xl font-bold tracking-wider">
+                    <span class="text-brand-gold group-hover:text-brand-goldLight transition-colors duration-300">LILYGOLD</span>
+                    <span class="text-brand-beige ml-1 font-light text-lg sm:text-xl">PLUS</span>
+                </span>
+            </a>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#home" class="text-sm tracking-widest uppercase text-brand-beige/80 hover:text-brand-gold transition-colors duration-300">Home</a>
+                <a href="Lilygoldplusshop.html" class="text-sm tracking-widest uppercase text-brand-beige/80 hover:text-brand-gold transition-colors duration-300">Shop</a>
+                <a href="Lilygoldplusabout.html" class="text-sm tracking-widest uppercase text-brand-beige/80 hover:text-brand-gold transition-colors duration-300">About</a>
+                <a href="Lilygoldpluscontacts.html" class="text-sm tracking-widest uppercase text-brand-beige/80 hover:text-brand-gold transition-colors duration-300">Contact</a>
+            </div>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-3 sm:gap-5">
+                <button id="searchBtn" class="p-2 text-brand-beige/70 hover:text-brand-gold transition-colors duration-300">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+                <button id="cartBtn" class="relative p-2 text-brand-beige/70 hover:text-brand-gold transition-colors duration-300">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span class="cart-count absolute -top-0.5 -right-0.5 bg-brand-gold text-brand-black font-bold rounded-full flex items-center justify-center">2</span>
+                </button>
+                <!-- Mobile Menu Toggle -->
+                <button id="menuToggle" class="md:hidden p-2 text-brand-beige/70 hover:text-brand-gold transition-colors duration-300">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-0 z-[60] bg-brand-black/98 backdrop-blur-xl flex flex-col items-center justify-center gap-8">
+        <button id="menuClose" class="absolute top-5 right-5 p-2 text-brand-beige/70 hover:text-brand-gold transition-colors">
+            <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <a href="#home" class="mobile-nav-link text-2xl font-serif tracking-widest uppercase text-brand-beige hover:text-brand-gold transition-colors duration-300">Home</a>
+        <a href="Lilygoldplusshop.html" class="mobile-nav-link text-2xl font-serif tracking-widest uppercase text-brand-beige hover:text-brand-gold transition-colors duration-300">Shop</a>
+        <a href="Lilygoldplusabout.html" class="mobile-nav-link text-2xl font-serif tracking-widest uppercase text-brand-beige hover:text-brand-gold transition-colors duration-300">About</a>
+        <a href="Lilygoldpluscontacts.html" class="mobile-nav-link text-2xl font-serif tracking-widest uppercase text-brand-beige hover:text-brand-gold transition-colors duration-300">Contact</a>
+        <div class="gold-line w-24 mt-4"></div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchModal" class="fixed inset-0 z-[70] bg-brand-black/95 backdrop-blur-xl flex items-start justify-center pt-32 px-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="w-full max-w-2xl">
+            <div class="flex items-center border-b-2 border-brand-gold/30 focus-within:border-brand-gold transition-colors duration-300 pb-4">
+                <i data-lucide="search" class="w-6 h-6 text-brand-gold mr-4 flex-shrink-0"></i>
+                <input type="text" placeholder="Search luxury watches, bags, accessories..." class="w-full bg-transparent text-2xl font-serif text-brand-beige placeholder:text-brand-beige/30 outline-none">
+                <button id="searchClose" class="p-2 text-brand-beige/50 hover:text-brand-gold transition-colors ml-4">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="mt-8 text-sm text-brand-beige/40 tracking-widest uppercase">Popular: Watches · Bags · Belts · Gold</div>
+        </div>
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cartDrawer" class="fixed inset-0 z-[70] hidden">
+        <div id="cartOverlay" class="absolute inset-0 bg-brand-black/70 backdrop-blur-sm"></div>
+        <div id="cartPanel" class="absolute right-0 top-0 bottom-0 w-full max-w-md bg-brand-black border-l border-brand-gold/10 transform translate-x-full transition-transform duration-500 cubic-bezier(0.22, 1, 0.36, 1) flex flex-col">
+            <div class="flex items-center justify-between p-6 border-b border-brand-gold/10">
+                <h3 class="font-serif text-xl tracking-wider">Your Bag</h3>
+                <button id="cartClose" class="p-2 text-brand-beige/50 hover:text-brand-gold transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                <!-- Cart Item 1 -->
+                <div class="flex gap-4">
+                    <div class="w-20 h-24 bg-brand-emerald/20 rounded overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=200&q=80" alt="Watch" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-serif text-sm tracking-wide">Royal Chronograph</h4>
+                        <p class="text-xs text-brand-beige/40 mt-1">Gold / 42mm</p>
+                        <p class="text-brand-gold font-medium mt-2">$2,450</p>
+                    </div>
+                    <button class="text-brand-beige/30 hover:text-red-400 transition-colors self-start">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+                <!-- Cart Item 2 -->
+                <div class="flex gap-4">
+                    <div class="w-20 h-24 bg-brand-emerald/20 rounded overflow-hidden flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1587915359183-c71927427760?w=200&q=80" alt="Bag" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-serif text-sm tracking-wide">Heritage Leather Tote</h4>
+                        <p class="text-xs text-brand-beige/40 mt-1">Black / Large</p>
+                        <p class="text-brand-gold font-medium mt-2">$1,890</p>
+                    </div>
+                    <button class="text-brand-beige/30 hover:text-red-400 transition-colors self-start">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 border-t border-brand-gold/10 space-y-4">
+                <div class="flex justify-between text-sm">
+                    <span class="text-brand-beige/50">Subtotal</span>
+                    <span class="font-medium">$4,340</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                    <span class="text-brand-beige/50">Shipping</span>
+                    <span class="text-brand-gold text-xs tracking-wider uppercase">Complimentary</span>
+                </div>
+                <div class="section-divider my-3"></div>
+                <div class="flex justify-between">
+                    <span class="font-serif tracking-wider">Total</span>
+                    <span class="font-serif text-xl text-brand-gold">$4,340</span>
+                </div>
+                <button class="btn-gold w-full py-4 text-sm tracking-widest rounded">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Images (collage effect) -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=1920&q=80" alt="Luxury Watch" class="w-full h-full object-cover" style="transform: scale(1.1); animation: none;">
+            </div>
+            <div class="hero-gradient absolute inset-0"></div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-1/4 left-8 w-px h-32 bg-gradient-to-b from-transparent via-brand-gold/20 to-transparent hidden lg:block"></div>
+        <div class="absolute bottom-1/4 right-8 w-px h-32 bg-gradient-to-b from-transparent via-brand-gold/20 to-transparent hidden lg:block"></div>
+        <div class="absolute top-20 right-20 w-2 h-2 bg-brand-gold/30 rounded-full float-badge hidden lg:block"></div>
+        <div class="absolute bottom-40 left-20 w-1.5 h-1.5 bg-brand-gold/20 rounded-full float-badge hidden lg:block" style="animation-delay: 1s;"></div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto">
+            <div class="hero-text-animate hero-text-animate-1 inline-flex items-center gap-3 mb-6 sm:mb-8">
+                <div class="w-8 sm:w-12 h-px bg-brand-gold/60"></div>
+                <span class="text-[10px] sm:text-xs tracking-[0.3em] uppercase text-brand-gold font-medium">Est. 2024 · Premium Luxury</span>
+                <div class="w-8 sm:w-12 h-px bg-brand-gold/60"></div>
+            </div>
+
+            <h1 class="hero-text-animate hero-text-animate-2 font-serif text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[0.95] tracking-tight">
+                Timeless Luxury.<br>
+                <span class="shimmer-text">Elevated Style.</span>
+            </h1>
+
+            <p class="hero-text-animate hero-text-animate-3 mt-6 sm:mt-8 text-base sm:text-lg lg:text-xl text-brand-beige/60 max-w-2xl mx-auto leading-relaxed font-light">
+                Premium watches, bags, and accessories crafted for those who move with class.
+            </p>
+
+            <div class="hero-text-animate hero-text-animate-4 mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#collection" class="btn-gold px-10 py-4 text-xs sm:text-sm tracking-[0.2em] rounded-sm">
+                    Explore Collection
+                </a>
+                <a href="#about" class="btn-gold-outline px-10 py-4 text-xs sm:text-sm tracking-[0.2em] rounded-sm">
+                    Our Story
+                </a>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="hero-text-animate hero-text-animate-4 mt-16 sm:mt-24 flex flex-col items-center gap-2">
+                <span class="text-[10px] tracking-[0.25em] uppercase text-brand-beige/30">Scroll</span>
+                <div class="w-px h-8 bg-gradient-to-b from-brand-gold/40 to-transparent animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ BRAND STORY SECTION ============ -->
+    <section id="about" class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
+        <!-- Subtle BG Gradient -->
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-black via-brand-emerald/5 to-brand-black"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Image -->
+                <div class="animate-on-scroll slide-left relative">
+                    <div class="relative overflow-hidden rounded-sm">
+                        <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=800&q=80" alt="Luxury Watch Lifestyle" class="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-black/40 via-transparent to-transparent"></div>
+                    </div>
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -right-4 sm:right-8 bg-brand-gold text-brand-black p-5 sm:p-6 rounded-sm float-badge">
+                        <div class="text-3xl sm:text-4xl font-serif font-bold">10+</div>
+                        <div class="text-[10px] tracking-[0.2em] uppercase font-medium mt-1">Years of<br>Craftsmanship</div>
+                    </div>
+                    <!-- Decorative border -->
+                    <div class="absolute -top-4 -left-4 w-24 h-24 border-t border-l border-brand-gold/20 rounded-tl-sm hidden sm:block"></div>
+                </div>
+
+                <!-- Text -->
+                <div class="animate-on-scroll slide-right">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-px bg-brand-gold/60"></div>
+                        <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold font-medium">Our Story</span>
+                    </div>
+
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight tracking-tight ">
+                        Redefining<br>
+                        <span class="text-brand-gold">Elegance</span> &<br>
+                        Confidence
+                    </h2>
+
+                    <div class="gold-line w-16 mt-8 mb-8"></div>
+
+                    <p class="text-brand-beige/60 text-base sm:text-lg leading-relaxed font-light">
+                        LILYGOLD PLUS is a premium luxury brand focused on delivering high-quality watches, bags, and accessories that redefine elegance and confidence.
+                    </p>
+                    <p class="text-brand-beige/40 text-sm sm:text-base leading-relaxed font-light mt-4">
+                        Every piece in our collection is a statement — meticulously crafted from the finest materials, designed for those who understand that true luxury isn't just worn, it's felt. We believe in the power of exceptional craftsmanship to elevate not just your style, but your presence.
+                    </p>
+
+                    <!-- Values -->
+                    <div class="grid grid-cols-2 gap-4 sm:gap-6 mt-8 sm:mt-10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 bg-brand-gold rounded-full flex-shrink-0"></div>
+                            <span class="text-sm text-brand-beige/70 tracking-wide">Unmatched Class</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 bg-brand-gold rounded-full flex-shrink-0"></div>
+                            <span class="text-sm text-brand-beige/70 tracking-wide">Status Symbol</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 bg-brand-gold rounded-full flex-shrink-0"></div>
+                            <span class="text-sm text-brand-beige/70 tracking-wide">Fine Craftsmanship</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 bg-brand-gold rounded-full flex-shrink-0"></div>
+                            <span class="text-sm text-brand-beige/70 tracking-wide">Exclusive Access</span>
+                        </div>
+                    </div>
+
+                    <a href="#collection" class="btn-gold-outline inline-block mt-8 sm:mt-10 px-8 py-3.5 text-xs tracking-[0.2em] rounded-sm">
+                        Discover More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FEATURED COLLECTION SECTION ============ -->
+    <section id="collection" class="relative py-24 sm:py-32 lg:py-40">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-black via-brand-black to-brand-emerald/5"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-14 sm:mb-20">
+                <div class="animate-on-scroll flex items-center justify-center gap-3 mb-6">
+                    <div class="w-8 h-px bg-brand-gold/60"></div>
+                    <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold font-medium">Curated Selection</span>
+                    <div class="w-8 h-px bg-brand-gold/60"></div>
+                </div>
+                <h2 class="animate-on-scroll delay-100 font-serif text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight">
+                    Featured <span class="text-brand-gold">Collection</span>
+                </h2>
+                <p class="animate-on-scroll delay-200 mt-4 sm:mt-6 text-brand-beige/50 text-sm sm:text-base max-w-xl mx-auto font-light">
+                    Each piece handpicked for its exceptional quality, design, and timeless appeal.
+                </p>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
+                <!-- Product 1 -->
+                <div class="animate-on-scroll delay-100 product-card group rounded-sm bg-brand-black/50">
+                    <div class="relative overflow-hidden aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600&q=80" alt="Royal Chronograph Watch" class="product-image w-full h-full object-cover">
+                        <div class="product-overlay">
+                            <button class="view-btn btn-gold px-6 py-3 text-[10px] tracking-[0.2em] rounded-sm">View Product</button>
+                        </div>
+                        <!-- Badge -->
+                        <div class="absolute top-3 left-3 bg-brand-gold text-brand-black text-[9px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-sm">New</div>
+                    </div>
+                    <div class="p-4 sm:p-5">
+                        <h3 class="font-serif text-sm sm:text-base tracking-wide">Royal Chronograph</h3>
+                        <p class="text-[11px] text-brand-beige/40 mt-1 tracking-wide">Gold · Stainless Steel</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-brand-gold font-serif text-lg">$2,450</span>
+                            <button class="p-2 border border-brand-gold/20 rounded-full hover:bg-brand-gold/10 transition-colors duration-300 group-hover:border-brand-gold/40">
+                                <i data-lucide="plus" class="w-3.5 h-3.5 text-brand-gold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="animate-on-scroll delay-200 product-card group rounded-sm bg-brand-black/50">
+                    <div class="relative overflow-hidden aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1587915359183-c71927427760?w=600&q=80" alt="Heritage Leather Tote" class="product-image w-full h-full object-cover">
+                        <div class="product-overlay">
+                            <button class="view-btn btn-gold px-6 py-3 text-[10px] tracking-[0.2em] rounded-sm">View Product</button>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-5">
+                        <h3 class="font-serif text-sm sm:text-base tracking-wide">Heritage Leather Tote</h3>
+                        <p class="text-[11px] text-brand-beige/40 mt-1 tracking-wide">Black · Italian Leather</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-brand-gold font-serif text-lg">$1,890</span>
+                            <button class="p-2 border border-brand-gold/20 rounded-full hover:bg-brand-gold/10 transition-colors duration-300 group-hover:border-brand-gold/40">
+                                <i data-lucide="plus" class="w-3.5 h-3.5 text-brand-gold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="animate-on-scroll delay-300 product-card group rounded-sm bg-brand-black/50">
+                    <div class="relative overflow-hidden aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=600&q=80" alt="Noir Elite Watch" class="product-image w-full h-full object-cover">
+                        <div class="product-overlay">
+                            <button class="view-btn btn-gold px-6 py-3 text-[10px] tracking-[0.2em] rounded-sm">View Product</button>
+                        </div>
+                        <div class="absolute top-3 left-3 bg-brand-emerald text-brand-beige text-[9px] font-bold tracking-[0.15em] uppercase px-2.5 py-1 rounded-sm">Bestseller</div>
+                    </div>
+                    <div class="p-4 sm:p-5">
+                        <h3 class="font-serif text-sm sm:text-base tracking-wide">Noir Elite Automatic</h3>
+                        <p class="text-[11px] text-brand-beige/40 mt-1 tracking-wide">Black · Sapphire Crystal</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-brand-gold font-serif text-lg">$3,200</span>
+                            <button class="p-2 border border-brand-gold/20 rounded-full hover:bg-brand-gold/10 transition-colors duration-300 group-hover:border-brand-gold/40">
+                                <i data-lucide="plus" class="w-3.5 h-3.5 text-brand-gold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="animate-on-scroll delay-400 product-card group rounded-sm bg-brand-black/50">
+                    <div class="relative overflow-hidden aspect-[3/4]">
+                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80" alt="Artisan Belt" class="product-image w-full h-full object-cover">
+                        <div class="product-overlay">
+                            <button class="view-btn btn-gold px-6 py-3 text-[10px] tracking-[0.2em] rounded-sm">View Product</button>
+                        </div>
+                    </div>
+                    <div class="p-4 sm:p-5">
+                        <h3 class="font-serif text-sm sm:text-base tracking-wide">Artisan Belt Collection</h3>
+                        <p class="text-[11px] text-brand-beige/40 mt-1 tracking-wide">Brown · Genuine Leather</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-brand-gold font-serif text-lg">$680</span>
+                            <button class="p-2 border border-brand-gold/20 rounded-full hover:bg-brand-gold/10 transition-colors duration-300 group-hover:border-brand-gold/40">
+                                <i data-lucide="plus" class="w-3.5 h-3.5 text-brand-gold"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All -->
+            <div class="animate-on-scroll text-center mt-12 sm:mt-16">
+                <a href="#" class="btn-gold-outline inline-block px-10 py-4 text-xs tracking-[0.2em] rounded-sm">
+                    View All Products
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ LIFESTYLE / EXPERIENCE SECTION ============ -->
+    <section class="parallax-section relative min-h-[80vh] sm:min-h-screen flex items-center justify-center">
+        <div class="parallax-bg" id="parallaxBg" style="background-image: url('https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=1920&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-black/90 via-brand-emerald/50 to-brand-black/90"></div>
+        <div class="absolute inset-0 bg-brand-black/30"></div>
+
+        <div class="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto">
+            <div class="animate-on-scroll flex items-center justify-center gap-3 mb-6 sm:mb-8">
+                <div class="w-8 h-px bg-brand-gold/60"></div>
+                <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold font-medium">The Experience</span>
+                <div class="w-8 h-px bg-brand-gold/60"></div>
+            </div>
+            <h2 class="animate-on-scroll delay-100 font-serif text-3xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight tracking-tight">
+                Designed for individuals<br>
+                who <span class="text-brand-gold italic">lead</span>, not follow.
+            </h2>
+            <p class="animate-on-scroll delay-200 mt-6 sm:mt-8 text-brand-beige/50 text-sm sm:text-lg max-w-xl mx-auto font-light leading-relaxed">
+                Every LILYGOLD PLUS piece is a reflection of ambition, refined taste, and the unwavering pursuit of excellence.
+            </p>
+            <div class="animate-on-scroll delay-300 mt-8 sm:mt-10 flex items-center justify-center gap-8 sm:gap-12">
+                <div class="text-center">
+                    <div class="font-serif text-2xl sm:text-4xl text-brand-gold font-bold">50K+</div>
+                    <div class="text-[10px] tracking-[0.2em] uppercase text-brand-beige/40 mt-1">Happy Clients</div>
+                </div>
+                <div class="w-px h-10 bg-brand-gold/20"></div>
+                <div class="text-center">
+                    <div class="font-serif text-2xl sm:text-4xl text-brand-gold font-bold">200+</div>
+                    <div class="text-[10px] tracking-[0.2em] uppercase text-brand-beige/40 mt-1">Unique Designs</div>
+                </div>
+                <div class="w-px h-10 bg-brand-gold/20"></div>
+                <div class="text-center">
+                    <div class="font-serif text-2xl sm:text-4xl text-brand-gold font-bold">30+</div>
+                    <div class="text-[10px] tracking-[0.2em] uppercase text-brand-beige/40 mt-1">Countries</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ WHY CHOOSE US ============ -->
+    <section class="relative py-24 sm:py-32 lg:py-40">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-emerald/5 via-brand-black to-brand-black"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center mb-14 sm:mb-20">
+                <div class="animate-on-scroll flex items-center justify-center gap-3 mb-6">
+                    <div class="w-8 h-px bg-brand-gold/60"></div>
+                    <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold font-medium">Why LILYGOLD PLUS</span>
+                    <div class="w-8 h-px bg-brand-gold/60"></div>
+                </div>
+                <h2 class="animate-on-scroll delay-100 font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    The <span class="text-brand-gold">Difference</span>
+                </h2>
+            </div>
+
+            <!-- Value Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+                <!-- Value 1 -->
+                <div class="animate-on-scroll delay-100 value-card bg-brand-black/60 rounded-sm p-6 sm:p-8 text-center group">
+                    <div class="value-icon w-16 h-16 mx-auto rounded-full border border-brand-gold/15 bg-brand-gold/5 flex items-center justify-center mb-5">
+                        <i data-lucide="gem" class="w-7 h-7 text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-serif text-lg tracking-wide mb-3">Premium Materials</h3>
+                    <p class="text-sm text-brand-beige/40 leading-relaxed font-light">Sourced from the world's finest tanneries, ateliers, and horological workshops.</p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="animate-on-scroll delay-200 value-card bg-brand-black/60 rounded-sm p-6 sm:p-8 text-center group">
+                    <div class="value-icon w-16 h-16 mx-auto rounded-full border border-brand-gold/15 bg-brand-gold/5 flex items-center justify-center mb-5">
+                        <i data-lucide="clock" class="w-7 h-7 text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-serif text-lg tracking-wide mb-3">Timeless Design</h3>
+                    <p class="text-sm text-brand-beige/40 leading-relaxed font-light">Pieces that transcend trends — designed to remain relevant for decades.</p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="animate-on-scroll delay-300 value-card bg-brand-black/60 rounded-sm p-6 sm:p-8 text-center group">
+                    <div class="value-icon w-16 h-16 mx-auto rounded-full border border-brand-gold/15 bg-brand-gold/5 flex items-center justify-center mb-5">
+                        <i data-lucide="truck" class="w-7 h-7 text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-serif text-lg tracking-wide mb-3">Fast Delivery</h3>
+                    <p class="text-sm text-brand-beige/40 leading-relaxed font-light">Express worldwide shipping with full tracking and insurance included.</p>
+                </div>
+
+                <!-- Value 4 -->
+                <div class="animate-on-scroll delay-400 value-card bg-brand-black/60 rounded-sm p-6 sm:p-8 text-center group">
+                    <div class="value-icon w-16 h-16 mx-auto rounded-full border border-brand-gold/15 bg-brand-gold/5 flex items-center justify-center mb-5">
+                        <i data-lucide="shield-check" class="w-7 h-7 text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-serif text-lg tracking-wide mb-3">Satisfaction Guarantee</h3>
+                    <p class="text-sm text-brand-beige/40 leading-relaxed font-light">30-day returns and a lifetime warranty on every LILYGOLD PLUS piece.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ SECOND COLLECTION ROW ============ -->
+    <section class="relative py-16 sm:py-24">
+        <div class="absolute inset-0 bg-brand-black"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
+                <!-- Large Feature -->
+                <div class="animate-on-scroll product-card group rounded-sm overflow-hidden relative aspect-[4/5] lg:aspect-auto lg:row-span-2">
+                    <img src="https://images.unsplash.com/photo-1543087903-1ac2ec7aa8c5?w=800&q=80" alt="Premium Bag Collection" class="product-image w-full h-full object-cover absolute inset-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-black/90 via-brand-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
+                        <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold font-medium">Limited Edition</span>
+                        <h3 class="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold mt-2 tracking-tight">The Executive<br>Collection</h3>
+                        <p class="text-sm text-brand-beige/50 mt-3 font-light max-w-sm">Hand-stitched Italian leather bags for the modern executive who demands excellence.</p>
+                        <button class="btn-gold mt-5 px-8 py-3 text-[10px] tracking-[0.2em] rounded-sm">Shop Now</button>
+                    </div>
+                </div>
+
+                <!-- Small Feature 1 -->
+                <div class="animate-on-scroll delay-200 product-card group rounded-sm overflow-hidden relative aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=800&q=80" alt="Classic Watch" class="product-image w-full h-full object-cover absolute inset-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-black/90 via-brand-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                        <h3 class="font-serif text-xl sm:text-2xl font-bold tracking-tight">Classic Dress Watches</h3>
+                        <p class="text-sm text-brand-beige/50 mt-2 font-light">From $1,200</p>
+                    </div>
+                </div>
+
+                <!-- Small Feature 2 -->
+                <div class="animate-on-scroll delay-300 product-card group rounded-sm overflow-hidden relative aspect-[4/3]">
+                    <img src="https://images.unsplash.com/photo-1594534475808-b18fc33b045e?w=800&q=80" alt="Accessories" class="product-image w-full h-full object-cover absolute inset-0">
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-black/90 via-brand-black/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                        <h3 class="font-serif text-xl sm:text-2xl font-bold tracking-tight">Belts & Accessories</h3>
+                        <p class="text-sm text-brand-beige/50 mt-2 font-light">From $380</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ TESTIMONIAL SECTION ============ -->
+    <section class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-black via-brand-emerald/3 to-brand-black"></div>
+        <!-- Decorative -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-gold/[0.02] rounded-full blur-3xl"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14 sm:mb-20">
+                <div class="animate-on-scroll flex items-center justify-center gap-3 mb-6">
+                    <div class="w-8 h-px bg-brand-gold/60"></div>
+                    <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold font-medium">Testimonials</span>
+                    <div class="w-8 h-px bg-brand-gold/60"></div>
+                </div>
+                <h2 class="animate-on-scroll delay-100 font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    What Our <span class="text-brand-gold">Clients</span> Say
+                </h2>
+            </div>
+
+            <!-- Testimonial Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+                <!-- Testimonial 1 -->
+                <div class="animate-on-scroll delay-100 testimonial-card bg-brand-black/60 border border-brand-gold/8 rounded-sm p-6 sm:p-8">
+                    <div class="flex gap-1 mb-5">
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                    </div>
+                    <p class="text-brand-beige/60 text-sm leading-relaxed font-light italic">
+                        "The Royal Chronograph is nothing short of a masterpiece. The weight, the finish, the attention to detail — it's clear this brand operates at a level far above its price point."
+                    </p>
+                    <div class="flex items-center gap-4 mt-6 pt-5 border-t border-brand-gold/8">
+                        <div class="w-10 h-10 rounded-full bg-brand-emerald/30 flex items-center justify-center">
+                            <span class="text-sm font-serif text-brand-gold font-bold">JM</span>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium tracking-wide">James Mitchell</div>
+                            <div class="text-[11px] text-brand-beige/40">CEO, Mitchell & Co.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 (Featured) -->
+                <div class="animate-on-scroll delay-200 testimonial-card bg-brand-gold/[0.05] border border-brand-gold/20 rounded-sm p-6 sm:p-8 md:-mt-4 md:mb-4">
+                    <div class="flex gap-1 mb-5">
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                    </div>
+                    <p class="text-brand-beige/70 text-sm leading-relaxed font-light italic">
+                        "I've owned watches from major Swiss houses, and LILYGOLD PLUS stands shoulder to shoulder with them. The Heritage Tote is now my daily companion — it only gets better with age. Absolutely exceptional."
+                    </p>
+                    <div class="flex items-center gap-4 mt-6 pt-5 border-t border-brand-gold/15">
+                        <div class="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center">
+                            <span class="text-sm font-serif text-brand-gold font-bold">SA</span>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium tracking-wide">Sophia Arnaud</div>
+                            <div class="text-[11px] text-brand-beige/40">Creative Director, Paris</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="animate-on-scroll delay-300 testimonial-card bg-brand-black/60 border border-brand-gold/8 rounded-sm p-6 sm:p-8">
+                    <div class="flex gap-1 mb-5">
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                        <i data-lucide="star" class="w-4 h-4 star fill-current"></i>
+                    </div>
+                    <p class="text-brand-beige/60 text-sm leading-relaxed font-light italic">
+                        "Fast shipping, premium packaging, and the product exceeded my expectations. The belt collection is understated luxury at its finest. Will be ordering more without hesitation."
+                    </p>
+                    <div class="flex items-center gap-4 mt-6 pt-5 border-t border-brand-gold/8">
+                        <div class="w-10 h-10 rounded-full bg-brand-emerald/30 flex items-center justify-center">
+                            <span class="text-sm font-serif text-brand-gold font-bold">DK</span>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium tracking-wide">David Kim</div>
+                            <div class="text-[11px] text-brand-beige/40">Architect, Seoul</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA SECTION ============ -->
+    <section class="relative py-24 sm:py-32 lg:py-40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-emerald/20 via-brand-black to-brand-emerald/10"></div>
+        <!-- Decorative gold elements -->
+        <div class="absolute top-0 left-0 w-40 h-40 border-t border-l border-brand-gold/10 rounded-tl-sm"></div>
+        <div class="absolute bottom-0 right-0 w-40 h-40 border-b border-r border-brand-gold/10 rounded-br-sm"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-gold/[0.03] rounded-full blur-3xl"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <div class="animate-on-scroll flex items-center justify-center gap-3 mb-6 sm:mb-8">
+                <div class="w-8 h-px bg-brand-gold/60"></div>
+                <span class="text-[10px] tracking-[0.3em] uppercase text-brand-gold font-medium">Exclusive Access</span>
+                <div class="w-8 h-px bg-brand-gold/60"></div>
+            </div>
+
+            <h2 class="animate-on-scroll delay-100 font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-tight">
+                Upgrade Your<br>
+                <span class="shimmer-text">Style Today</span>
+            </h2>
+
+            <p class="animate-on-scroll delay-200 mt-6 sm:mt-8 text-brand-beige/50 text-base sm:text-lg max-w-xl mx-auto font-light leading-relaxed">
+                Join the LILYGOLD PLUS circle and experience luxury that speaks before you do.
+            </p>
+
+            <div class="animate-on-scroll delay-300 mt-8 sm:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#collection" class="btn-gold px-12 py-4 sm:py-5 text-xs sm:text-sm tracking-[0.2em] rounded-sm" style="animation: goldPulse 3s ease-in-out infinite;">
+                    Shop Now
+                </a>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="animate-on-scroll delay-400 mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-brand-beige/25">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="lock" class="w-4 h-4"></i>
+                    <span class="text-[10px] tracking-[0.15em] uppercase">Secure Checkout</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    <span class="text-[10px] tracking-[0.15em] uppercase">30-Day Returns</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="award" class="w-4 h-4"></i>
+                    <span class="text-[10px] tracking-[0.15em] uppercase">Lifetime Warranty</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="globe" class="w-4 h-4"></i>
+                    <span class="text-[10px] tracking-[0.15em] uppercase">Worldwide Shipping</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ NEWSLETTER ============ -->
+    <section class="relative py-16 sm:py-20 border-t border-brand-gold/5">
+        <div class="absolute inset-0 bg-brand-black"></div>
+        <div class="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 text-center">
+            <h3 class="animate-on-scroll font-serif text-xl sm:text-2xl tracking-wide">Join the <span class="text-brand-gold">Inner Circle</span></h3>
+            <p class="animate-on-scroll delay-100 text-sm text-brand-beige/40 mt-3 font-light">Be the first to access new collections, exclusive offers, and private events.</p>
+            <div class="animate-on-scroll delay-200 mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3">
+                <input type="email" placeholder="Your email address" class="flex-1 bg-brand-black border border-brand-gold/15 rounded-sm px-5 py-3.5 text-sm text-brand-beige placeholder:text-brand-beige/25 outline-none focus:border-brand-gold/40 transition-colors duration-300">
+                <button class="btn-gold px-8 py-3.5 text-[10px] tracking-[0.2em] rounded-sm whitespace-nowrap">Subscribe</button>
+            </div>
+            <p class="animate-on-scroll delay-300 text-[10px] text-brand-beige/20 mt-4 tracking-wide">No spam. Unsubscribe anytime. We respect your privacy.</p>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer id="contact" class="relative border-t border-brand-gold/5">
+        <div class="absolute inset-0 bg-gradient-to-b from-brand-black to-brand-emerald/5"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Footer Main -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 py-16 sm:py-20">
+                <!-- Brand -->
+                <div class="col-span-2 md:col-span-1">
+                    <div class="font-serif text-xl font-bold tracking-wider mb-4">
+                        <span class="text-brand-gold">LILYGOLD</span>
+                        <span class="text-brand-beige ml-1 font-light text-lg">PLUS</span>
+                    </div>
+                    <p class="text-sm text-brand-beige/40 leading-relaxed font-light">
+                        Premium luxury watches, bags, and accessories for those who move with class.
+                    </p>
+                    <!-- Social Icons -->
+                    <div class="flex items-center gap-4 mt-6">
+                        <a href="#" class="w-9 h-9 rounded-full border border-brand-gold/15 flex items-center justify-center text-brand-beige/40 hover:text-brand-gold hover:border-brand-gold/40 transition-all duration-300">
+                            <i data-lucide="instagram" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-brand-gold/15 flex items-center justify-center text-brand-beige/40 hover:text-brand-gold hover:border-brand-gold/40 transition-all duration-300">
+                            <i data-lucide="twitter" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-brand-gold/15 flex items-center justify-center text-brand-beige/40 hover:text-brand-gold hover:border-brand-gold/40 transition-all duration-300">
+                            <i data-lucide="facebook" class="w-4 h-4"></i>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-brand-gold/15 flex items-center justify-center text-brand-beige/40 hover:text-brand-gold hover:border-brand-gold/40 transition-all duration-300">
+                            <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Shop -->
+                <div>
+                    <h4 class="text-[11px] tracking-[0.2em] uppercase text-brand-gold font-medium mb-5">Shop</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Watches</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Bags</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Belts</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Accessories</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Gift Sets</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="text-[11px] tracking-[0.2em] uppercase text-brand-gold font-medium mb-5">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="Lilygoldplusabout.html" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">About Us</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Our Story</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Careers</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Press</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Support -->
+                <div>
+                    <h4 class="text-[11px] tracking-[0.2em] uppercase text-brand-gold font-medium mb-5">Support</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Contact Us</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Shipping Info</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Returns & Exchanges</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">FAQ</a></li>
+                        <li><a href="#" class="text-sm text-brand-beige/40 hover:text-brand-gold transition-colors duration-300 font-light">Size Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="section-divider"></div>
+            <div class="py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-[11px] text-brand-beige/25 tracking-wide font-light">
+                    © 2025 LILYGOLD PLUS. All rights reserved.
+                </p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-[11px] text-brand-beige/25 hover:text-brand-gold transition-colors tracking-wide font-light">Privacy Policy</a>
+                    <a href="#" class="text-[11px] text-brand-beige/25 hover:text-brand-gold transition-colors tracking-wide font-light">Terms of Service</a>
+                    <a href="#" class="text-[11px] text-brand-beige/25 hover:text-brand-gold transition-colors tracking-wide font-light">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ JAVASCRIPT ============ -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            requestAnimationFrame(() => {
+                document.body.classList.add('page-loaded');
+            });
+        });
+
+        // ---- NAVBAR SCROLL EFFECT ----
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 60) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // ---- MOBILE MENU ----
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        menuClose.addEventListener('click', closeMenu);
+        mobileNavLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+        // ---- SEARCH MODAL ----
+        const searchBtn = document.getElementById('searchBtn');
+        const searchModal = document.getElementById('searchModal');
+        const searchClose = document.getElementById('searchClose');
+        const searchInput = searchModal.querySelector('input');
+
+        searchBtn.addEventListener('click', () => {
+            searchModal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                searchModal.style.opacity = '1';
+                searchInput.focus();
+            });
+            document.body.style.overflow = 'hidden';
+        });
+
+        function closeSearch() {
+            searchModal.style.opacity = '0';
+            setTimeout(() => {
+                searchModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        searchClose.addEventListener('click', closeSearch);
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) closeSearch();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSearch();
+                closeCart();
+                closeMenu();
+            }
+        });
+
+        // ---- CART DRAWER ----
+        const cartBtn = document.getElementById('cartBtn');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartPanel = document.getElementById('cartPanel');
+        const cartClose = document.getElementById('cartClose');
+
+        cartBtn.addEventListener('click', () => {
+            cartDrawer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            requestAnimationFrame(() => {
+                cartPanel.style.transform = 'translateX(0)';
+            });
+        });
+
+        function closeCart() {
+            cartPanel.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                cartDrawer.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 500);
+        }
+
+        cartClose.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // ---- SCROLL ANIMATIONS (Intersection Observer) ----
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ---- PARALLAX EFFECT ----
+        const parallaxBg = document.getElementById('parallaxBg');
+        if (parallaxBg) {
+            window.addEventListener('scroll', () => {
+                const section = parallaxBg.closest('.parallax-section');
+                const rect = section.getBoundingClientRect();
+                const scrollPercent = rect.top / window.innerHeight;
+                const translateY = scrollPercent * 80;
+                parallaxBg.style.transform = `translateY(${translateY}px) scale(1.15)`;
+            }, { passive: true });
+        }
+
+        // ---- SMOOTH SCROLL FOR ANCHOR LINKS ----
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ---- ADD TO CART BUTTON INTERACTION ----
+        document.querySelectorAll('.product-card .value-icon + div button, .product-card button[class*="plus"]').forEach(btn => {
+            // This targets the plus buttons on product cards
+        });
+
+        // Specific plus button handling
+        document.querySelectorAll('.product-card .p-2.border').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const icon = btn.querySelector('[data-lucide]');
+                if (icon) {
+                    // Visual feedback
+                    btn.style.background = 'rgba(212,175,55,0.3)';
+                    btn.style.borderColor = 'rgba(212,175,55,0.6)';
+                    setTimeout(() => {
+                        btn.style.background = '';
+                        btn.style.borderColor = '';
+                    }, 400);
+                }
+                // Update cart count
+                const countEl = document.querySelector('.cart-count');
+                if (countEl) {
+                    let count = parseInt(countEl.textContent);
+                    countEl.textContent = count + 1;
+                    // Pulse animation on cart icon
+                    const cartIcon = document.getElementById('cartBtn');
+                    cartIcon.style.transform = 'scale(1.2)';
+                    setTimeout(() => {
+                        cartIcon.style.transform = 'scale(1)';
+                    }, 200);
+                }
+            });
+        });
+
+        // ---- IMAGE LOAD HANDLING ----
+        document.querySelectorAll('img').forEach(img => {
+            if (img.complete) {
+                img.classList.add('loaded');
+            } else {
+                img.addEventListener('load', () => img.classList.add('loaded'));
+            }
+        });
+
+        // ---- NEWSLETTER FORM ----
+        const newsletterInput = document.querySelector('input[type="email"]');
+        const newsletterBtn = newsletterInput?.nextElementSibling;
+
+        if (newsletterBtn) {
+            newsletterBtn.addEventListener('click', () => {
+                const email = newsletterInput.value.trim();
+                if (email && email.includes('@')) {
+                    newsletterBtn.textContent = 'SUBSCRIBED ✓';
+                    newsletterBtn.style.background = '#0F3D2E';
+                    newsletterBtn.style.color = '#D4AF37';
+                    newsletterInput.value = '';
+                    setTimeout(() => {
+                        newsletterBtn.textContent = 'SUBSCRIBE';
+                        newsletterBtn.style.background = '';
+                        newsletterBtn.style.color = '';
+                    }, 3000);
+                } else {
+                    newsletterInput.style.borderColor = 'rgba(239,68,68,0.5)';
+                    newsletterInput.placeholder = 'Please enter a valid email';
+                    setTimeout(() => {
+                        newsletterInput.style.borderColor = '';
+                        newsletterInput.placeholder = 'Your email address';
+                    }, 2000);
+                }
+            });
+        }
+
+        // ---- HOVER PARALLAX ON HERO (subtle mouse movement) ----
+        const heroSection = document.getElementById('home');
+        if (heroSection) {
+            heroSection.addEventListener('mousemove', (e) => {
+                const rect = heroSection.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                const heroImg = heroSection.querySelector('img');
+                if (heroImg) {
+                    heroImg.style.transform = `scale(1.1) translate(${x * -15}px, ${y * -15}px)`;
+                    heroImg.style.transition = 'transform 0.3s ease-out';
+                }
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                const heroImg = heroSection.querySelector('img');
+                if (heroImg) {
+                    heroImg.style.transform = 'scale(1.1) translate(0, 0)';
+                    heroImg.style.transition = 'transform 0.8s ease-out';
+                }
+            });
+        }
+
+        // ---- VIEW PRODUCT BUTTON TOAST ----
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showToast('Opening product details...');
+            });
+        });
+
+        // Toast notification system
+        function showToast(message) {
+            const existing = document.querySelector('.toast-notification');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] bg-brand-black border border-brand-gold/20 text-brand-beige text-sm px-6 py-3 rounded-sm shadow-2xl tracking-wide font-light';
+            toast.style.cssText = 'opacity:0; transform: translateX(-50%) translateY(20px); transition: all 0.4s cubic-bezier(0.22,1,0.36,1);';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            });
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(20px)';
+                setTimeout(() => toast.remove(), 400);
+            }, 2500);
+        }
+
+        // Re-init lucide after DOM is fully ready
+        setTimeout(() => lucide.createIcons(), 100);
+    </script>
+</body>
+</html>

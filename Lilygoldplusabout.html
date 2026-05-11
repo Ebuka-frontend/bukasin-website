@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — LILYGOLD PLUS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0B0B0B',
+                        gold: '#D4AF37',
+                        'gold-light': '#E8C94A',
+                        'gold-dark': '#B8962E',
+                        emerald: '#0F3D2E',
+                        'emerald-light': '#1A5C44',
+                        offwhite: '#F5F5F5',
+                        'offwhite-muted': '#E8E8E8',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'Georgia', 'serif'],
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0B0B;
+            color: #F5F5F5;
+            overflow-x: hidden;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.75s ease-out, transform 0.75s ease-out;
+        }
+
+        body.page-loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        ::selection {
+            background-color: #D4AF37;
+            color: #0B0B0B;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0B0B; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 3px; }
+
+        /* Animation Classes */
+        .anim-fade {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .anim-fade.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .anim-fade-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .anim-fade-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .anim-slide-left {
+            opacity: 0;
+            transform: translateX(-80px);
+            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .anim-slide-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .anim-slide-right {
+            opacity: 0;
+            transform: translateX(80px);
+            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .anim-slide-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .anim-scale {
+            opacity: 0;
+            transform: scale(0.92);
+            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .anim-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .delay-100 { transition-delay: 0.1s !important; }
+        .delay-200 { transition-delay: 0.2s !important; }
+        .delay-300 { transition-delay: 0.3s !important; }
+        .delay-400 { transition-delay: 0.4s !important; }
+        .delay-500 { transition-delay: 0.5s !important; }
+        .delay-600 { transition-delay: 0.6s !important; }
+
+        /* Hero parallax */
+        .hero-bg {
+            transition: transform 0.1s linear;
+        }
+
+        /* Gold glow hover */
+        .gold-glow {
+            transition: box-shadow 0.5s ease, transform 0.5s ease;
+        }
+        .gold-glow:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.3), 0 0 60px rgba(212, 175, 55, 0.1);
+            transform: scale(1.02);
+        }
+
+        /* Image zoom on scroll */
+        .img-zoom {
+            transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .img-zoom.active {
+            transform: scale(1.05);
+        }
+
+        /* Divider line animation */
+        .line-grow {
+            width: 0;
+            transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .line-grow.active {
+            width: 80px;
+        }
+
+        /* Nav */
+        .nav-scrolled {
+            background: rgba(11, 11, 11, 0.95) !important;
+            backdrop-filter: blur(16px) !important;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15) !important;
+        }
+
+        /* Gold button shimmer */
+        .btn-gold {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+
+        /* Value card */
+        .value-card {
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .value-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.03);
+            transform: translateY(-8px);
+        }
+        .value-card:hover .value-icon {
+            background: rgba(212, 175, 55, 0.15);
+            color: #D4AF37;
+        }
+
+        /* Founder image frame */
+        .founder-frame {
+            position: relative;
+        }
+        .founder-frame::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            right: 12px;
+            bottom: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            z-index: 0;
+            transition: all 0.5s ease;
+        }
+        .founder-frame:hover::before {
+            top: -16px;
+            left: -16px;
+            border-color: rgba(212, 175, 55, 0.6);
+        }
+
+        /* Grain overlay */
+        .grain::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Hero text stagger */
+        .hero-text-line {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .hero-text-line:nth-child(2) { animation-delay: 0.2s; }
+        .hero-text-line:nth-child(3) { animation-delay: 0.4s; }
+        .hero-text-line:nth-child(4) { animation-delay: 0.6s; }
+
+        @keyframes heroReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse-gold {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        .pulse-gold {
+            animation: pulse-gold 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="Lilygoldplushome.html" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center bg-gold/5 group-hover:bg-gold/10 transition-colors duration-300">
+                        <span class="font-serif text-gold font-bold text-lg">L</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-serif text-lg font-semibold tracking-wide text-offwhite" href="Lilygoldplushome.html">LILYGOLD</span>
+                        <span class="text-[10px] tracking-[0.35em] text-gold/80 font-medium -mt-0.5">PLUS</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Links -->
+                <div class="hidden md:flex items-center gap-10">
+                    <a href="#" class="text-sm text-offwhite/60 hover:text-gold transition-colors duration-300 tracking-wide">Home</a>
+                    <a href="#" class="text-sm text-gold tracking-wide font-medium relative after:absolute after:bottom-[-4px] after:left-0 after:w-full after:h-[1px] after:bg-gold">About</a>
+                    <a href="#" class="text-sm text-offwhite/60 hover:text-gold transition-colors duration-300 tracking-wide">Collection</a>
+                    <a href="#" class="text-sm text-offwhite/60 hover:text-gold transition-colors duration-300 tracking-wide">Contact</a>
+                    <a href="#" class="ml-4 px-6 py-2.5 bg-gold text-primary text-sm font-semibold tracking-wide hover:bg-gold-light transition-colors duration-300 btn-gold">
+                        Shop Now
+                    </a>
+                </div>
+
+                <!-- Mobile Toggle -->
+                <button id="menuToggle" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 group">
+                    <span class="w-6 h-[1.5px] bg-offwhite/80 group-hover:bg-gold transition-all duration-300 menu-line-1"></span>
+                    <span class="w-6 h-[1.5px] bg-offwhite/80 group-hover:bg-gold transition-all duration-300 menu-line-2"></span>
+                    <span class="w-4 h-[1.5px] bg-offwhite/80 group-hover:bg-gold transition-all duration-300 ml-auto menu-line-3"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-80 h-full bg-primary/98 backdrop-blur-xl z-50 flex flex-col">
+            <div class="flex items-center justify-between px-6 h-20 border-b border-white/5">
+                <span class="font-serif text-gold text-lg">Menu</span>
+                <button id="menuClose" class="w-10 h-10 flex items-center justify-center text-offwhite/60 hover:text-gold transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="flex flex-col px-6 py-8 gap-6">
+                <a href="#" class="text-lg text-offwhite/60 hover:text-gold transition-colors duration-300 font-light">Home</a>
+                <a href="#" class="text-lg text-gold font-medium">About</a>
+                <a href="#" class="text-lg text-offwhite/60 hover:text-gold transition-colors duration-300 font-light">Collection</a>
+                <a href="#" class="text-lg text-offwhite/60 hover:text-gold transition-colors duration-300 font-light">Contact</a>
+                <div class="pt-6 border-t border-white/5">
+                    <a href="#" class="block text-center px-6 py-3 bg-gold text-primary font-semibold tracking-wide hover:bg-gold-light transition-colors duration-300 btn-gold">
+                        Shop Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile menu overlay -->
+    <div id="menuOverlay" class="fixed inset-0 bg-black/60 z-40 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+
+    <!-- ========== SECTION 1: HERO ========== -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden grain">
+        <!-- Background Image -->
+        <div class="absolute inset-0 hero-bg">
+            <img
+                src="https://picsum.photos/seed/luxurydarktexture/1920/1080.jpg"
+                alt="Luxury background"
+                class="w-full h-full object-cover opacity-30"
+            >
+        </div>
+
+        <!-- Overlay Gradient (black + green) -->
+        <div class="absolute inset-0 bg-gradient-to-b from-primary/80 via-emerald/40 to-primary/95"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/60 via-transparent to-primary/60"></div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute top-1/4 left-10 w-32 h-32 border border-gold/10 rounded-full pulse-gold hidden lg:block"></div>
+        <div class="absolute bottom-1/4 right-16 w-20 h-20 border border-gold/10 rounded-full pulse-gold hidden lg:block" style="animation-delay: 1.5s;"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 text-center px-6 max-w-4xl mx-auto pt-20">
+            <div class="hero-text-line">
+                <span class="inline-block text-xs tracking-[0.4em] text-gold/80 font-medium uppercase mb-6 px-5 py-2 border border-gold/20 rounded-full bg-gold/5">
+                    Our Story
+                </span>
+            </div>
+
+            <h1 class="hero-text-line font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-offwhite">
+                About <span class="text-gold italic">LILYGOLD</span> PLUS
+            </h1>
+
+            <p class="hero-text-line mt-6 text-lg sm:text-xl md:text-2xl font-light text-offwhite/60 tracking-wide">
+                Crafting elegance. Defining luxury.
+            </p>
+
+            <div class="hero-text-line mt-10 flex items-center justify-center gap-4">
+                <a href="#story" class="w-12 h-12 rounded-full border border-gold/40 flex items-center justify-center hover:bg-gold/10 hover:border-gold/70 transition-all duration-300 group">
+                    <i data-lucide="chevron-down" class="w-5 h-5 text-gold/70 group-hover:text-gold transition-colors duration-300"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Bottom fade -->
+        <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary to-transparent"></div>
+    </section>
+
+
+    <!-- ========== SECTION 2: COMPANY STORY ========== -->
+    <section id="story" class="relative py-24 md:py-32 lg:py-40">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+                <!-- Text (Left) -->
+                <div class="anim-slide-left">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="line-grow h-[1px] bg-gold/60"></div>
+                        <span class="text-xs tracking-[0.3em] text-gold/70 uppercase font-medium">Who We Are</span>
+                    </div>
+
+                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight text-offwhite">
+                        A Legacy of
+                        <span class="text-gold italic"> Refined</span> Luxury
+                    </h2>
+
+                    <div class="mt-8 space-y-5 text-base sm:text-lg font-light leading-relaxed text-offwhite/60">
+                        <p>
+                            LILYGOLD PLUS is a luxury brand dedicated to providing premium watches, bags, and accessories designed for individuals who value class, confidence, and timeless style.
+                        </p>
+                        <p>
+                            Our mission is to combine elegance with quality, offering products that elevate everyday living into a statement of sophistication.
+                        </p>
+                    </div>
+
+                    <div class="mt-10 flex items-center gap-8">
+                        <div>
+                            <span class="font-serif text-3xl font-bold text-gold">500+</span>
+                            <p class="text-xs tracking-wider text-offwhite/40 mt-1 uppercase">Products</p>
+                        </div>
+                        <div class="w-[1px] h-12 bg-gold/20"></div>
+                        <div>
+                            <span class="font-serif text-3xl font-bold text-gold">50+</span>
+                            <p class="text-xs tracking-wider text-offwhite/40 mt-1 uppercase">Collections</p>
+                        </div>
+                        <div class="w-[1px] h-12 bg-gold/20"></div>
+                        <div>
+                            <span class="font-serif text-3xl font-bold text-gold">2K+</span>
+                            <p class="text-xs tracking-wider text-offwhite/40 mt-1 uppercase">Clients</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image (Right) -->
+                <div class="anim-slide-right">
+                    <div class="relative overflow-hidden rounded-2xl gold-glow">
+                        <img
+                            src="https://picsum.photos/seed/luxurywatchgold/800/900.jpg"
+                            alt="LILYGOLD PLUS luxury products"
+                            class="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover img-zoom"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <div class="flex items-center gap-3 px-4 py-3 bg-primary/80 backdrop-blur-md rounded-lg border border-gold/10">
+                                <div class="w-2 h-2 rounded-full bg-gold pulse-gold"></div>
+                                <span class="text-sm text-offwhite/70 font-light tracking-wide">Premium Collection 2025</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SECTION 3: PHYSICAL PRESENCE ========== -->
+    <section class="relative py-24 md:py-32 lg:py-40 overflow-hidden">
+        <!-- Subtle background -->
+        <div class="absolute inset-0 bg-gradient-to-b from-primary via-emerald/5 to-primary"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+            <!-- Section Label -->
+            <div class="text-center mb-16 anim-fade">
+                <div class="flex items-center justify-center gap-4 mb-6">
+                    <div class="w-12 h-[1px] bg-gold/30"></div>
+                    <span class="text-xs tracking-[0.3em] text-gold/70 uppercase font-medium">Our Presence</span>
+                    <div class="w-12 h-[1px] bg-gold/30"></div>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-offwhite">
+                    Where Luxury <span class="text-gold italic">Lives</span>
+                </h2>
+            </div>
+
+            <!-- Building Image -->
+            <div class="anim-scale">
+                <div class="relative overflow-hidden rounded-2xl gold-glow">
+                    <img
+                        src="https://picsum.photos/seed/modernluxurybuilding/1600/700.jpg"
+                        alt="LILYGOLD PLUS headquarters"
+                        class="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px] object-cover img-zoom"
+                    >
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/20 to-transparent"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary/30 to-transparent"></div>
+
+                    <!-- Overlay Text -->
+                    <div class="absolute bottom-0 left-0 right-0 p-8 sm:p-12 lg:p-16">
+                        <div class="max-w-2xl">
+                            <h3 class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-offwhite mb-4 leading-tight">
+                                A Space That Speaks <span class="text-gold italic">Excellence</span>
+                            </h3>
+                            <p class="text-base sm:text-lg font-light text-offwhite/60 leading-relaxed max-w-xl">
+                                Our presence reflects our commitment to excellence. LILYGOLD PLUS operates from a refined environment that embodies the luxury and quality we deliver.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature badges -->
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 anim-fade delay-300">
+                <div class="text-center py-6 px-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                    <i data-lucide="map-pin" class="w-5 h-5 text-gold/60 mx-auto mb-3"></i>
+                    <p class="text-sm text-offwhite/50 font-light">Prime Location</p>
+                </div>
+                <div class="text-center py-6 px-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                    <i data-lucide="building-2" class="w-5 h-5 text-gold/60 mx-auto mb-3"></i>
+                    <p class="text-sm text-offwhite/50 font-light">Modern Facility</p>
+                </div>
+                <div class="text-center py-6 px-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-gold/60 mx-auto mb-3"></i>
+                    <p class="text-sm text-offwhite/50 font-light">Secure Showroom</p>
+                </div>
+                <div class="text-center py-6 px-4 rounded-xl border border-white/5 bg-white/[0.02]">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-gold/60 mx-auto mb-3"></i>
+                    <p class="text-sm text-offwhite/50 font-light">Premium Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SECTION 4: MEET THE FOUNDER ========== -->
+    <section class="relative py-24 md:py-32 lg:py-40">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+                <!-- Founder Image -->
+                <div class="order-2 lg:order-1 anim-slide-left">
+                    <div class="relative flex justify-center lg:justify-start">
+                        <div class="founder-frame relative z-10">
+                            <img
+                                src="https://picsum.photos/seed/businessmanluxury/600/750.jpg"
+                                alt="Founder of LILYGOLD PLUS"
+                                class="w-full max-w-[400px] h-[480px] sm:h-[550px] object-cover rounded-xl"
+                            >
+                            <div class="absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent rounded-xl"></div>
+                        </div>
+
+                        <!-- Floating accent card -->
+                        <div class="absolute -bottom-6 -right-4 sm:right-8 bg-emerald/90 backdrop-blur-md border border-gold/20 rounded-xl px-6 py-5 z-20 anim-fade delay-400">
+                            <p class="text-xs tracking-[0.2em] text-gold/70 uppercase font-medium mb-1">Est.</p>
+                            <p class="font-serif text-2xl font-bold text-offwhite">2020</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text (Right) -->
+                <div class="order-1 lg:order-2 anim-slide-right">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="line-grow h-[1px] bg-gold/60"></div>
+                        <span class="text-xs tracking-[0.3em] text-gold/70 uppercase font-medium">The Visionary</span>
+                    </div>
+
+                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold leading-tight tracking-tight text-offwhite">
+                        Meet the <span class="text-gold italic">Founder</span>
+                    </h2>
+
+                    <div class="mt-8 space-y-5 text-base sm:text-lg font-light leading-relaxed text-offwhite/60">
+                        <p>
+                            Founded by a visionary with a passion for luxury and detail, LILYGOLD PLUS was built to redefine how people experience premium accessories.
+                        </p>
+                        <p>
+                            With a focus on quality, authenticity, and customer satisfaction, the brand continues to grow as a symbol of modern elegance.
+                        </p>
+                    </div>
+
+                    <div class="mt-10 flex flex-wrap gap-4">
+                        <div class="flex items-center gap-3 px-5 py-3 rounded-full border border-gold/15 bg-gold/5">
+                            <i data-lucide="award" class="w-4 h-4 text-gold/70"></i>
+                            <span class="text-sm text-offwhite/60 font-light">Quality First</span>
+                        </div>
+                        <div class="flex items-center gap-3 px-5 py-3 rounded-full border border-gold/15 bg-gold/5">
+                            <i data-lucide="heart" class="w-4 h-4 text-gold/70"></i>
+                            <span class="text-sm text-offwhite/60 font-light">Customer Driven</span>
+                        </div>
+                        <div class="flex items-center gap-3 px-5 py-3 rounded-full border border-gold/15 bg-gold/5">
+                            <i data-lucide="gem" class="w-4 h-4 text-gold/70"></i>
+                            <span class="text-sm text-offwhite/60 font-light">Authentic Luxury</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SECTION 5: BRAND VALUES ========== -->
+    <section class="relative py-24 md:py-32 lg:py-40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-primary via-emerald/[0.03] to-primary"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-16 md:mb-20 anim-fade">
+                <div class="flex items-center justify-center gap-4 mb-6">
+                    <div class="w-12 h-[1px] bg-gold/30"></div>
+                    <span class="text-xs tracking-[0.3em] text-gold/70 uppercase font-medium">What We Stand For</span>
+                    <div class="w-12 h-[1px] bg-gold/30"></div>
+                </div>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-offwhite">
+                    Our Core <span class="text-gold italic">Values</span>
+                </h2>
+                <p class="mt-5 text-base sm:text-lg font-light text-offwhite/50 max-w-2xl mx-auto">
+                    Every piece we create reflects the principles that define LILYGOLD PLUS.
+                </p>
+            </div>
+
+            <!-- Values Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Value 1 -->
+                <div class="value-card rounded-2xl p-8 bg-white/[0.02] text-center anim-fade-up delay-100">
+                    <div class="value-icon w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 transition-all duration-500">
+                        <i data-lucide="crown" class="w-7 h-7 text-gold/70"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold text-offwhite mb-3">Excellence in Craftsmanship</h3>
+                    <p class="text-sm font-light text-offwhite/50 leading-relaxed">
+                        Every product is meticulously crafted using premium materials and techniques that stand the test of time.
+                    </p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="value-card rounded-2xl p-8 bg-white/[0.02] text-center anim-fade-up delay-200">
+                    <div class="value-icon w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 transition-all duration-500">
+                        <i data-lucide="clock" class="w-7 h-7 text-gold/70"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold text-offwhite mb-3">Timeless Design</h3>
+                    <p class="text-sm font-light text-offwhite/50 leading-relaxed">
+                        We create pieces that transcend trends — designed to remain relevant and stunning for years to come.
+                    </p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="value-card rounded-2xl p-8 bg-white/[0.02] text-center anim-fade-up delay-300">
+                    <div class="value-icon w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 transition-all duration-500">
+                        <i data-lucide="smile" class="w-7 h-7 text-gold/70"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold text-offwhite mb-3">Customer Satisfaction</h3>
+                    <p class="text-sm font-light text-offwhite/50 leading-relaxed">
+                        Our clients are at the heart of everything. We deliver experiences that exceed expectations at every touchpoint.
+                    </p>
+                </div>
+
+                <!-- Value 4 -->
+                <div class="value-card rounded-2xl p-8 bg-white/[0.02] text-center anim-fade-up delay-400">
+                    <div class="value-icon w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 transition-all duration-500">
+                        <i data-lucide="eye" class="w-7 h-7 text-gold/70"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-semibold text-offwhite mb-3">Attention to Detail</h3>
+                    <p class="text-sm font-light text-offwhite/50 leading-relaxed">
+                        From stitching to packaging, every detail is thoughtfully considered to deliver perfection.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SECTION 6: CALL TO ACTION ========== -->
+    <section class="relative py-24 md:py-32 lg:py-40 overflow-hidden grain">
+        <!-- Background -->
+        <div class="absolute inset-0">
+            <img
+                src="https://picsum.photos/seed/darkluxuryabstract/1920/800.jpg"
+                alt=""
+                class="w-full h-full object-cover opacity-15"
+            >
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary via-emerald/20 to-primary"></div>
+        <div class="absolute inset-0 bg-primary/60"></div>
+
+        <!-- Decorative -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-gold/5 hidden lg:block"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full border border-gold/10 hidden lg:block"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 text-center anim-fade-up">
+            <span class="inline-block text-xs tracking-[0.4em] text-gold/80 font-medium uppercase mb-8">
+                Discover More
+            </span>
+
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight text-offwhite">
+                Experience Luxury<br>
+                <span class="text-gold italic">Like Never Before</span>
+            </h2>
+
+            <p class="mt-6 text-lg sm:text-xl font-light text-offwhite/50 max-w-2xl mx-auto">
+                Explore our curated collection of premium watches, bags, and accessories — each piece telling a story of elegance.
+            </p>
+
+            <div class="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#" class="group inline-flex items-center gap-3 px-10 py-4 bg-gold text-primary font-semibold text-base tracking-wide hover:bg-gold-light transition-all duration-300 btn-gold rounded-full">
+                    Explore Collection
+                    <i data-lucide="arrow-right" class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"></i>
+                </a>
+                <a href="#" class="inline-flex items-center gap-3 px-10 py-4 border border-gold/30 text-gold font-medium text-base tracking-wide hover:border-gold/60 hover:bg-gold/5 transition-all duration-300 rounded-full">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ========== SECTION 7: FOOTER ========== -->
+    <footer class="relative border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <!-- Main Footer -->
+            <div class="py-16 md:py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+                <!-- Brand -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full border border-gold/40 flex items-center justify-center bg-gold/5">
+                            <span class="font-serif text-gold font-bold text-lg">L</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-serif text-lg font-semibold tracking-wide text-offwhite">LILYGOLD</span>
+                            <span class="text-[10px] tracking-[0.35em] text-gold/80 font-medium -mt-0.5">PLUS</span>
+                        </div>
+                    </div>
+                    <p class="text-sm font-light text-offwhite/40 leading-relaxed max-w-xs">
+                        Crafting elegance and defining luxury through premium watches, bags, and accessories.
+                    </p>
+                    <div class="flex items-center gap-4 mt-6">
+                        <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-offwhite/40 hover:border-gold/40 hover:text-gold transition-all duration-300">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-offwhite/40 hover:border-gold/40 hover:text-gold transition-all duration-300">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                        </a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-offwhite/40 hover:border-gold/40 hover:text-gold transition-all duration-300">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-sm font-semibold text-offwhite tracking-wide uppercase mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm font-light text-offwhite/40 hover:text-gold transition-colors duration-300">Home</a></li>
+                        <li><a href="#" class="text-sm font-light text-offwhite/40 hover:text-gold transition-colors duration-300">About Us</a></li>
+                        <li><a href="#" class="text-sm font-light text-offwhite/40 hover:text-gold transition-colors duration-300">Collection</a></li>
+                        <li><a href="#" class="text-sm font-light text-offwhite/40 hover:text-gold transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Categories -->
+                <div>
+                    <h4 class="text-sm font-semibold text-offwhite tracking-wide uppercase mb-6">Categories</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm font-light text-offwhite/40 hover:text-gold transition-colors duration-300">Luxury Watches</a></li>
+                        <li><a href="#" class="text-sm font-light text-offwhite/40 hover:text-gold transition-colors duration-300">Designer Bags</a></li>
+                        <li><a href="#" class="text-sm font-light text-offwhite/40 hover:text-gold transition-colors duration-300">Premium Belts</a></li>
+                        <li><a href="#" class="text-sm font-light text-offwhite/40 hover:text-gold transition-colors duration-300">Accessories</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-sm font-semibold text-offwhite tracking-wide uppercase mb-6">Get in Touch</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="mail" class="w-4 h-4 text-gold/50 mt-0.5 shrink-0"></i>
+                            <span class="text-sm font-light text-offwhite/40">info@lilygoldplus.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="phone" class="w-4 h-4 text-gold/50 mt-0.5 shrink-0"></i>
+                            <span class="text-sm font-light text-offwhite/40">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-gold/50 mt-0.5 shrink-0"></i>
+                            <span class="text-sm font-light text-offwhite/40">123 Luxury Avenue,<br>New York, NY 10001</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="py-6 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-xs text-offwhite/30 font-light">
+                    &copy; 2025 LILYGOLD PLUS. All rights reserved.
+                </p>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="text-xs text-offwhite/30 hover:text-gold/60 transition-colors duration-300 font-light">Privacy Policy</a>
+                    <a href="#" class="text-xs text-offwhite/30 hover:text-gold/60 transition-colors duration-300 font-light">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            requestAnimationFrame(() => {
+                document.body.classList.add('page-loaded');
+            });
+        });
+
+        // ---- Intersection Observer for Scroll Animations ----
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Don't unobserve so animations replay on re-entry is optional
+                    // animObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.anim-fade, .anim-fade-up, .anim-slide-left, .anim-slide-right, .anim-scale, .line-grow, .img-zoom').forEach(el => {
+            animObserver.observe(el);
+        });
+
+        // ---- Navbar Scroll Effect ----
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 80) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+
+            lastScroll = currentScroll;
+        }, { passive: true });
+
+        // ---- Hero Parallax ----
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg) {
+            window.addEventListener('scroll', () => {
+                const scrollY = window.pageYOffset;
+                if (scrollY < window.innerHeight) {
+                    heroBg.style.transform = `translateY(${scrollY * 0.3}px) scale(1.1)`;
+                }
+            }, { passive: true });
+        }
+
+        // ---- Mobile Menu ----
+        const menuToggle = document.getElementById('menuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            menuOverlay.style.opacity = '1';
+            menuOverlay.style.pointerEvents = 'auto';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            menuOverlay.style.opacity = '0';
+            menuOverlay.style.pointerEvents = 'none';
+            document.body.style.overflow = '';
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        menuClose.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        // Close menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // ---- Smooth Scroll for anchor links ----
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const offset = 80;
+                    const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                    window.scrollTo({ top, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — LILYGOLD PLUS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0B0B0B',
+            accent: '#D4AF37',
+            'accent-light': '#F5E6A3',
+            emerald: '#0F3D2E',
+            offwhite: '#F5F5F5',
+            'card-bg': '#141414',
+            'card-border': '#222222',
+          },
+          fontFamily: {
+            playfair: ['Playfair Display', 'serif'],
+            inter: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0B0B0B; color: #F5F5F5; font-family: 'Inter', sans-serif; opacity: 0; transform: translateY(15px); transition: opacity 0.75s ease-out, transform 0.75s ease-out; }
+
+    body.page-loaded { opacity: 1; transform: translateY(0); }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0B0B0B; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+
+    .category-scroll::-webkit-scrollbar { display: none; }
+    .category-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .gold-shimmer {
+      background: linear-gradient(90deg, #D4AF37 0%, #F5E6A3 25%, #D4AF37 50%, #B8941F 75%, #D4AF37 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 8s linear infinite;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-heading { animation: fadeInUp 0.8s ease-out both; }
+    .hero-subtitle { animation: fadeInUp 0.8s ease-out 0.2s both; }
+    .hero-line { animation: fadeInUp 0.8s ease-out 0.35s both; }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(35px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .product-card {
+      opacity: 0;
+      animation: cardIn 0.55s ease-out forwards;
+      animation-delay: calc(var(--delay) * 0.06s);
+    }
+
+    #product-grid {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .grid-hidden {
+      opacity: 0 !important;
+      transform: translateY(20px) !important;
+    }
+
+    @media (hover: hover) {
+      .product-card .card-image img {
+        transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .product-card:hover .card-image img {
+        transform: scale(1.06);
+      }
+      .product-card .card-overlay {
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+      .product-card:hover .card-overlay {
+        opacity: 1;
+      }
+      .product-card .whatsapp-btn {
+        opacity: 0;
+        transform: translateY(12px);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.08s;
+      }
+      .product-card:hover .whatsapp-btn {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .product-card {
+        border: 1px solid #222;
+        transition: border-color 0.4s ease, box-shadow 0.4s ease;
+      }
+      .product-card:hover {
+        border-color: #D4AF37;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.12), 0 0 50px rgba(212, 175, 55, 0.05);
+      }
+    }
+
+    @media (hover: none) {
+      .product-card .whatsapp-btn {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .product-card .card-overlay {
+        opacity: 0.6;
+      }
+    }
+
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+      50% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+    }
+    .wa-float {
+      animation: waPulse 2.5s ease-in-out infinite;
+    }
+    .wa-float:hover {
+      animation: none;
+      box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+    }
+
+    .cat-tab {
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .cat-tab::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: #D4AF37;
+      transition: width 0.3s ease;
+      border-radius: 1px;
+    }
+    .cat-tab.active::after {
+      width: 100%;
+    }
+
+    .nav-blur {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .mobile-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .mobile-menu.open {
+      max-height: 300px;
+      opacity: 1;
+    }
+
+    .wa-tooltip {
+      opacity: 0;
+      transform: translateX(10px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .wa-float:hover .wa-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    @media (hover: none) {
+      .wa-tooltip { display: none; }
+    }
+
+    .img-skeleton {
+      background: linear-gradient(110deg, #1a1a1a 8%, #252525 18%, #1a1a1a 33%);
+      background-size: 200% 100%;
+      animation: skeletonShimmer 1.5s linear infinite;
+    }
+    @keyframes skeletonShimmer {
+      to { background-position: -200% 0; }
+    }
+
+    .img-fallback {
+      background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 50%, #1a1a1a 100%);
+    }
+  </style>
+</head>
+
+<body class="bg-primary text-offwhite font-inter antialiased">
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 nav-blur bg-primary/80 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <a href="#" class="flex items-center gap-3 group">
+          <div class="w-8 h-8 bg-accent rounded-sm flex items-center justify-center">
+            <span class="font-playfair font-bold text-primary text-sm">L</span>
+          </div>
+          <div class="flex flex-col leading-none">
+            <span class="font-playfair font-bold text-sm md:text-base tracking-wider text-offwhite group-hover:text-accent transition-colors duration-300">LILYGOLD</span>
+            <span class="text-[9px] md:text-[10px] tracking-[0.3em] text-accent font-medium">PLUS</span>
+          </div>
+        </a>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#" class="text-sm font-medium text-accent tracking-wide">Shop</a>
+          <a href="#" class="text-sm font-light text-offwhite/60 hover:text-offwhite transition-colors duration-300">Collections</a>
+          <a href="#" class="text-sm font-light text-offwhite/60 hover:text-offwhite transition-colors duration-300">About</a>
+          <a href="#" class="text-sm font-light text-offwhite/60 hover:text-offwhite transition-colors duration-300">Contact</a>
+        </div>
+        <button id="menuToggle" class="md:hidden w-10 h-10 flex items-center justify-center rounded-sm border border-white/10 hover:border-accent/40 transition-colors">
+          <i data-lucide="menu" class="w-4 h-4 text-offwhite/80"></i>
+        </button>
+      </div>
+      <div id="mobileMenu" class="mobile-menu md:hidden border-t border-white/5">
+        <div class="py-4 flex flex-col gap-1">
+          <a href="#" class="px-4 py-3 text-sm font-medium text-accent bg-accent/5 rounded-sm">Shop</a>
+          <a href="#" class="px-4 py-3 text-sm font-light text-offwhite/60 hover:text-offwhite hover:bg-white/5 rounded-sm transition-colors">Collections</a>
+          <a href="#" class="px-4 py-3 text-sm font-light text-offwhite/60 hover:text-offwhite hover:bg-white/5 rounded-sm transition-colors">About</a>
+          <a href="#" class="px-4 py-3 text-sm font-light text-offwhite/60 hover:text-offwhite hover:bg-white/5 rounded-sm transition-colors">Contact</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO SECTION ========== -->
+  <section class="relative min-h-[50vh] md:min-h-[60vh] flex items-center justify-center pt-20 overflow-hidden">
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(212,175,55,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,55,0.3) 1px, transparent 1px); background-size: 60px 60px;"></div>
+    <div class="relative z-10 text-center px-4">
+      <p class="hero-subtitle text-xs md:text-sm font-medium tracking-[0.3em] uppercase text-accent/80 mb-6">Curated Excellence</p>
+      <h1 class="hero-heading font-playfair font-bold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1] tracking-tight">
+        <span class="gold-shimmer">Our Collection</span>
+      </h1>
+      <div class="hero-line w-16 h-px bg-accent/60 mx-auto mt-8 mb-6"></div>
+      <p class="hero-subtitle text-sm md:text-base font-light text-offwhite/50 max-w-md mx-auto leading-relaxed">
+        Luxury pieces curated for timeless elegance
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== CATEGORY FILTER ========== -->
+  <section class="bg-primary/90 nav-blur border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="category-scroll flex items-center gap-1 md:gap-2 py-4 overflow-x-auto" id="categoryBar"></div>
+    </div>
+  </section>
+
+  <!-- ========== PRODUCT GRID ========== -->
+  <section class="py-10 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-8">
+        <p id="productCount" class="text-xs md:text-sm font-light text-offwhite/40 tracking-wide"></p>
+        <p class="text-xs font-light text-offwhite/30 hidden md:block">Tap any item to order via WhatsApp</p>
+      </div>
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6"></div>
+    </div>
+  </section>
+
+  <!-- ========== CTA SECTION ========== -->
+  <section class="relative py-20 md:py-28 overflow-hidden">
+    <div class="absolute inset-0 bg-emerald"></div>
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="relative z-10 max-w-2xl mx-auto text-center px-4">
+      <div class="w-12 h-px bg-accent/50 mx-auto mb-8"></div>
+      <h2 class="font-playfair font-bold text-3xl md:text-4xl lg:text-5xl text-offwhite mb-4 tracking-tight">Need Help Choosing?</h2>
+      <p class="text-sm md:text-base font-light text-offwhite/50 mb-10 leading-relaxed max-w-md mx-auto">
+        Our luxury consultants are available to help you find the perfect piece for any occasion.
+      </p>
+      <a href="#" id="ctaWhatsapp" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-medium text-sm px-8 py-4 rounded-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#25D366]/20">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat with Us on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="border-t border-white/5 bg-primary">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-7 h-7 bg-accent rounded-sm flex items-center justify-center">
+              <span class="font-playfair font-bold text-primary text-xs">L</span>
+            </div>
+            <div class="flex flex-col leading-none">
+              <span class="font-playfair font-bold text-sm tracking-wider">LILYGOLD</span>
+              <span class="text-[8px] tracking-[0.3em] text-accent font-medium">PLUS</span>
+            </div>
+          </div>
+          <p class="text-xs font-light text-offwhite/30 leading-relaxed max-w-xs">Curated luxury pieces for those who appreciate timeless elegance and exceptional craftsmanship.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-6">
+          <div>
+            <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-offwhite/40 mb-4">Navigate</p>
+            <div class="flex flex-col gap-2.5">
+              <a href="#" class="text-xs font-light text-offwhite/50 hover:text-accent transition-colors">Shop</a>
+              <a href="#" class="text-xs font-light text-offwhite/50 hover:text-accent transition-colors">Collections</a>
+              <a href="#" class="text-xs font-light text-offwhite/50 hover:text-accent transition-colors">About Us</a>
+              <a href="#" class="text-xs font-light text-offwhite/50 hover:text-accent transition-colors">Contact</a>
+            </div>
+          </div>
+          <div>
+            <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-offwhite/40 mb-4">Support</p>
+            <div class="flex flex-col gap-2.5">
+              <a href="#" class="text-xs font-light text-offwhite/50 hover:text-accent transition-colors">Shipping</a>
+              <a href="#" class="text-xs font-light text-offwhite/50 hover:text-accent transition-colors">Returns</a>
+              <a href="#" class="text-xs font-light text-offwhite/50 hover:text-accent transition-colors">FAQ</a>
+              <a href="#" class="text-xs font-light text-offwhite/50 hover:text-accent transition-colors">Privacy</a>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-start md:items-end">
+          <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-offwhite/40 mb-4">Follow Us</p>
+          <div class="flex items-center gap-3">
+            <a href="#" class="w-9 h-9 rounded-sm border border-white/10 flex items-center justify-center hover:border-accent/40 hover:bg-accent/5 transition-all duration-300">
+              <i data-lucide="instagram" class="w-3.5 h-3.5 text-offwhite/50"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-sm border border-white/10 flex items-center justify-center hover:border-accent/40 hover:bg-accent/5 transition-all duration-300">
+              <i data-lucide="facebook" class="w-3.5 h-3.5 text-offwhite/50"></i>
+            </a>
+            <a href="#" class="w-9 h-9 rounded-sm border border-white/10 flex items-center justify-center hover:border-accent/40 hover:bg-accent/5 transition-all duration-300">
+              <i data-lucide="twitter" class="w-3.5 h-3.5 text-offwhite/50"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-white/5 mt-10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-[11px] font-light text-offwhite/20">© 2025 LILYGOLD PLUS. All rights reserved.</p>
+        <p class="text-[11px] font-light text-offwhite/20">Curated Luxury Since 2020</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== FLOATING WHATSAPP ========== -->
+  <a href="#" id="floatingWhatsapp" target="_blank" rel="noopener"
+     class="wa-float fixed bottom-6 right-6 z-50 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-110">
+    <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span class="wa-tooltip absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap bg-white text-primary text-xs font-medium px-3 py-2 rounded-sm shadow-lg">
+      Chat with us
+      <span class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1 w-2 h-2 bg-white rotate-45"></span>
+    </span>
+  </a>
+
+  <!-- ========== JAVASCRIPT ========== -->
+  <script>
+    // =============================================
+    // CONFIG — Replace with your WhatsApp number
+    // =============================================
+    const WHATSAPP_NUMBER = '1234567890';
+
+    function getWhatsAppLink(message) {
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    }
+
+    // =============================================
+    // REAL IMAGE URLS (Unsplash)
+    // =============================================
+    const img = (id) => `https://images.unsplash.com/${id}?w=600&h=750&fit=crop&auto=format&q=80`;
+
+    // =============================================
+    // PRODUCT DATA — 67 items with real images
+    // =============================================
+    const products = [
+
+      // ── WATCHES (20) ──
+      { id:1,  name:'Royal Gold Chronograph Watch',       price:4500,  category:'watches',      image: img('photo-1523170335258-f5ed11844a49') },
+      { id:2,  name:'Midnight Black Executive Watch',      price:3800,  category:'watches',      image: img('photo-1524592094714-0f0654e20314') },
+      { id:3,  name:'Diamond-Bezel Luxury Watch',          price:8900,  category:'watches',      image: img('photo-1522312346375-d1a52e2b99b3') },
+      { id:4,  name:'Rose Gold Automatic Watch',           price:5200,  category:'watches',      image: img('photo-1587836374828-4dbafa94cf0e') },
+      { id:5,  name:'Classic Silver Dress Watch',          price:3200,  category:'watches',      image: img('photo-1533139502658-0198f920d8e8') },
+      { id:6,  name:'Platinum Skeleton Watch',             price:7600,  category:'watches',      image: img('photo-1526045431048-f857369baa09') },
+      { id:7,  name:'Two-Tone GMT Master Watch',           price:6100,  category:'watches',      image: img('photo-1612817159949-195b6eb9e31a') },
+      { id:8,  name:'Vintage Leather Strap Watch',         price:2800,  category:'watches',      image: img('photo-1622434641406-a158123450f9') },
+      { id:9,  name:'Black & Gold Diver Watch',            price:4200,  category:'watches',      image: img('photo-1614164185128-e4ec99c436d7') },
+      { id:10, name:'Minimalist Swiss Watch',              price:3500,  category:'watches',      image: img('photo-1585123334904-845d60e97b29') },
+      { id:11, name:'Royal Oak Style Watch',               price:9200,  category:'watches',      image: img('photo-1548171915-e79a380a2a4b') },
+      { id:12, name:'Moonphase Complication Watch',        price:6800,  category:'watches',      image: img('photo-1542496658-e33a6d0d50f6') },
+      { id:13, name:'Carbon Fiber Sport Watch',            price:5500,  category:'watches',      image: img('photo-1509048191080-d2984bad6ae5') },
+      { id:14, name:'Ivory Dial Dress Watch',              price:4800,  category:'watches',      image: img('photo-1618397746666-63405ce5d015') },
+      { id:15, name:'Turquoise Accent Watch',              price:3900,  category:'watches',      image: img('photo-1600003014755-ba31aa59c4b6') },
+      { id:16, name:'Mesh Band Gold Watch',                price:4100,  category:'watches',      image: img('photo-1594534475808-b18fc33b045e') },
+      { id:17, name:'Skeleton Tourbillon Watch',           price:11500, category:'watches',      image: img('photo-1639037687665-f45834ac6d7d') },
+      { id:18, name:"Pilot's Chronograph Watch",           price:5800,  category:'watches',      image: img('photo-1612817288484-6f916006741a') },
+      { id:19, name:'Emerald Green Dial Watch',            price:4600,  category:'watches',      image: img('photo-1579586337278-3befd40fd17a') },
+      { id:20, name:'Limited Edition Gold Watch',          price:12000, category:'watches',      image: img('photo-1627037558426-c2d07beda3af') },
+
+      // ── BAGS (15) ──
+      { id:21, name:'Classic Leather Handbag',             price:2400,  category:'bags',         image: img('photo-1584917865442-de89df76afd3') },
+      { id:22, name:'Luxury Designer Tote',                price:3200,  category:'bags',         image: img('photo-1548036328-c9fa89d128fa') },
+      { id:23, name:'Quilted Chain Shoulder Bag',          price:2800,  category:'bags',         image: img('photo-1590874103328-eac38a683ce7') },
+      { id:24, name:'Structured Briefcase',                price:2100,  category:'bags',         image: img('photo-1591561954557-26941169b49e') },
+      { id:25, name:'Evening Clutch – Gold Hardware',      price:1800,  category:'bags',         image: img('photo-1594223274512-ad4803739b7c') },
+      { id:26, name:'Oversized Luxe Shopper',              price:2600,  category:'bags',         image: img('photo-1566150905458-1bf1fc113f0d') },
+      { id:27, name:'Crocodile-Effect Handbag',            price:4500,  category:'bags',         image: img('photo-1544816155-12df9643f363') },
+      { id:28, name:'Mini Crossbody Bag',                  price:1500,  category:'bags',         image: img('photo-1614179689702-355944cd0918') },
+      { id:29, name:'Velvet Evening Bag',                  price:1200,  category:'bags',         image: img('photo-1597633425046-08f5110420b5') },
+      { id:30, name:'Saddle Bag – Premium Leather',        price:2200,  category:'bags',         image: img('photo-1606107557195-0e29a4b5b4aa') },
+      { id:31, name:'Travel Weekender Bag',                price:3800,  category:'bags',         image: img('photo-1553062407-98eeb64c6a62') },
+      { id:32, name:'Woven Leather Bucket Bag',            price:2900,  category:'bags',         image: img('photo-1611937663571-a3f7c1c10f5c') },
+      { id:33, name:"Doctor's Bag – Vintage Style",        price:3400,  category:'bags',         image: img('photo-1560343090-f0409e92791a') },
+      { id:34, name:'Gold Chain Baguette Bag',             price:2700,  category:'bags',         image: img('photo-1605812860427-4024433a70fd') },
+      { id:35, name:'Exotic Skin Clutch',                  price:5200,  category:'bags',         image: img('photo-1614179301373-6d2a6d762d1d') },
+
+      // ── BELTS (10) ──
+      { id:36, name:'Premium Leather Belt – Gold Buckle',  price:650,   category:'belts',        image: img('photo-1624222247344-550fb60583dc') },
+      { id:37, name:'Reversible Black-Brown Belt',         price:480,   category:'belts',        image: img('photo-1559563458-527698bf5295') },
+      { id:38, name:'Designer Logo Belt',                  price:890,   category:'belts',        image: img('photo-1612902456551-404854679e02') },
+      { id:39, name:'Slim Italian Leather Belt',           price:520,   category:'belts',        image: img('photo-1627225924765-552d49cf47ad') },
+      { id:40, name:'Crocodile Embossed Belt',             price:1100,  category:'belts',        image: img('photo-1609873814058-a8928924184a') },
+      { id:41, name:'Braided Leather Belt',                price:380,   category:'belts',        image: img('photo-1617134448245-6323895cc35d') },
+      { id:42, name:'Automatic Buckle Dress Belt',         price:750,   category:'belts',        image: img('photo-1585687433926-2ef18e70dffa') },
+      { id:43, name:'Western-Style Luxury Belt',           price:920,   category:'belts',        image: img('photo-1589756823695-278bc923a426') },
+      { id:44, name:'Patent Leather Belt – Silver',        price:580,   category:'belts',        image: img('photo-1556712044-3e52a949c36b') },
+      { id:45, name:'Extra-Long Executive Belt',           price:440,   category:'belts',        image: img('photo-1595950653106-6c9ebd614d3a') },
+
+      // ── NECK CHAINS (7) ──
+      { id:46, name:'Gold-Plated Cuban Chain',             price:1800,  category:'neck-chains',  image: img('photo-1599643478518-a784e5dc4c8f') },
+      { id:47, name:'Silver Franco Chain',                 price:1200,  category:'neck-chains',  image: img('photo-1611652022419-a9419f74343d') },
+      { id:48, name:'Diamond-Cut Rope Chain',              price:2400,  category:'neck-chains',  image: img('photo-1602751584552-8ba73aad10e1') },
+      { id:49, name:'Figaro Chain – Gold Tone',            price:1500,  category:'neck-chains',  image: img('photo-1515562141589-67f0d569b6e3') },
+      { id:50, name:'Box Chain – Premium Finish',          price:980,   category:'neck-chains',  image: img('photo-1573408301185-9146fe634ad0') },
+      { id:51, name:'Miami Cuban Link Chain',              price:3200,  category:'neck-chains',  image: img('photo-1601121141461-9d6647bca1ed') },
+      { id:52, name:'Herringbone Chain – Gold',            price:1650,  category:'neck-chains',  image: img('photo-1617038260897-41a1f14a8ca0') },
+
+      // ── HAND CHAINS (5) ──
+      { id:53, name:'Luxury Hand Chain Bracelet',          price:850,   category:'hand-chains',  image: img('photo-1600721391776-b5cd0e0048f9') },
+      { id:54, name:'Gold Hand Harness – Single Strand',   price:1200,  category:'hand-chains',  image: img('photo-1576022162028-3a434f674b25') },
+      { id:55, name:'Crystal-Adorned Hand Chain',          price:950,   category:'hand-chains',  image: img('photo-1602173574767-37ac01994b2a') },
+      { id:56, name:'Double-Chain Hand Bracelet',          price:780,   category:'hand-chains',  image: img('photo-1611591437281-460bfbe1220a') },
+      { id:57, name:'Pearl & Gold Hand Chain',             price:1450,  category:'hand-chains',  image: img('photo-1596944924616-7b38e7cfac36') },
+
+      // ── FIGURINES (10) ──
+      { id:58, name:'Modern Luxury Home Figurine',         price:890,   category:'figurines',    image: img('photo-1558618666-fcd25c85f82e') },
+      { id:59, name:'Gold Horse Sculpture',                price:1800,  category:'figurines',    image: img('photo-1565193566173-7a0ee3dbe261') },
+      { id:60, name:'Abstract Art Deco Figure',            price:1200,  category:'figurines',    image: img('photo-1577720643272-265f09367456') },
+      { id:61, name:'Crystal Elephant Figurine',           price:950,   category:'figurines',    image: img('photo-1565538810643-b5bdb714032a') },
+      { id:62, name:'Luxury Bulldog Statue',               price:1500,  category:'figurines',    image: img('photo-1600180745248-5daa0c4bd26b') },
+      { id:63, name:'Elegant Swan Figurine',               price:780,   category:'figurines',    image: img('photo-1544966503-7cc5ac882d23') },
+      { id:64, name:'Gold Panther Sculpture',              price:2200,  category:'figurines',    image: img('photo-1556909114-44e3e70034e2') },
+      { id:65, name:'Minimalist Human Form Statue',        price:650,   category:'figurines',    image: img('photo-1506905925346-21bda4d32df4') },
+      { id:66, name:'Vintage-Style Globe Figurine',        price:1100,  category:'figurines',    image: img('photo-1572883454114-1cf0031ede2a') },
+      { id:67, name:'Crystal Eagle Figurine',              price:1650,  category:'figurines',    image: img('photo-1545569341-9eb8b30979d9') },
+    ];
+
+    // =============================================
+    // CATEGORIES
+    // =============================================
+    const categories = [
+      { key: 'watches',     label: 'Watches',      count: 20 },
+      { key: 'bags',        label: 'Bags',          count: 15 },
+      { key: 'belts',       label: 'Belts',         count: 10 },
+      { key: 'neck-chains', label: 'Neck Chains',   count: 7  },
+      { key: 'hand-chains', label: 'Hand Chains',   count: 5  },
+      { key: 'figurines',   label: 'Figurines',     count: 10 },
+    ];
+
+    let activeCategory = 'watches';
+
+    // =============================================
+    // CATEGORY ICONS (for fallback)
+    // =============================================
+    const categoryIcons = {
+      'watches': `<svg class="w-10 h-10 text-accent/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>`,
+      'bags': `<svg class="w-10 h-10 text-accent/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`,
+      'belts': `<svg class="w-10 h-10 text-accent/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1"><rect x="2" y="8" width="20" height="8" rx="1"/><rect x="10" y="5" width="4" height="14" rx="1"/></svg>`,
+      'neck-chains': `<svg class="w-10 h-10 text-accent/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><circle cx="12" cy="20" r="2"/></svg>`,
+      'hand-chains': `<svg class="w-10 h-10 text-accent/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>`,
+      'figurines': `<svg class="w-10 h-10 text-accent/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+    };
+
+    // =============================================
+    // FORMAT PRICE
+    // =============================================
+    function formatPrice(price) {
+      return '$' + price.toLocaleString('en-US');
+    }
+
+    // =============================================
+    // CREATE PRODUCT CARD
+    // =============================================
+    function createProductCard(product, index) {
+      const waMsg = `Hello, I want to order the ${product.name} from LILYGOLD PLUS`;
+      const waLink = getWhatsAppLink(waMsg);
+      const fallbackIcon = categoryIcons[product.category] || '';
+
+      return `
+        <div class="product-card bg-card-bg rounded-sm overflow-hidden cursor-pointer group"
+             style="--delay: ${index}"
+             onclick="window.open('${waLink}', '_blank')">
+          <div class="card-image relative aspect-[4/5] overflow-hidden bg-[#1a1a1a]">
+            <img src="${product.image}"
+                 alt="${product.name}"
+                 loading="lazy"
+                 class="w-full h-full object-cover img-skeleton"
+                 onload="this.classList.remove('img-skeleton')"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="img-fallback absolute inset-0 items-center justify-center" style="display:none">
+              ${fallbackIcon}
+            </div>
+            <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="whatsapp-btn inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-semibold px-5 py-3 rounded-sm transition-colors duration-300 shadow-lg shadow-[#25D366]/20 whitespace-nowrap">
+                <svg class="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Order via WhatsApp
+              </span>
+            </div>
+          </div>
+          <div class="p-4">
+            <h3 class="font-playfair font-medium text-sm md:text-base text-offwhite leading-snug mb-2 line-clamp-2 group-hover:text-accent transition-colors duration-300">
+              ${product.name}
+            </h3>
+            <p class="font-inter font-semibold text-accent text-sm tracking-wide">
+              ${formatPrice(product.price)}
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    // =============================================
+    // RENDER CATEGORIES
+    // =============================================
+    function renderCategories() {
+      const container = document.getElementById('categoryBar');
+      container.innerHTML = categories.map(cat => `
+        <button
+          class="cat-tab flex items-center gap-2 px-4 py-2.5 rounded-sm text-xs md:text-sm font-medium whitespace-nowrap transition-all duration-300 flex-shrink-0
+            ${activeCategory === cat.key
+              ? 'active text-accent bg-accent/10'
+              : 'text-offwhite/40 hover:text-offwhite/70 hover:bg-white/5'}"
+          onclick="switchCategory('${cat.key}')">
+          <span>${cat.label}</span>
+          <span class="text-[10px] font-light opacity-60">${cat.count}</span>
+        </button>
+      `).join('');
+    }
+
+    // =============================================
+    // RENDER PRODUCTS
+    // =============================================
+    function renderProducts(animate = true) {
+      const grid = document.getElementById('product-grid');
+      const countEl = document.getElementById('productCount');
+      const filtered = products.filter(p => p.category === activeCategory);
+
+      countEl.textContent = `${filtered.length} piece${filtered.length !== 1 ? 's' : ''}`;
+
+      if (animate) {
+        grid.classList.add('grid-hidden');
+        setTimeout(() => {
+          grid.innerHTML = filtered.map((p, i) => createProductCard(p, i)).join('');
+          requestAnimationFrame(() => {
+            grid.classList.remove('grid-hidden');
+          });
+        }, 300);
+      } else {
+        grid.innerHTML = filtered.map((p, i) => createProductCard(p, i)).join('');
+      }
+    }
+
+    // =============================================
+    // SWITCH CATEGORY
+    // =============================================
+    function switchCategory(key) {
+      if (key === activeCategory) return;
+      activeCategory = key;
+      renderCategories();
+      renderProducts(true);
+      setTimeout(() => {
+        const grid = document.getElementById('product-grid');
+        const offset = grid.getBoundingClientRect().top + window.scrollY - 140;
+        window.scrollTo({ top: offset, behavior: 'smooth' });
+      }, 100);
+    }
+
+    // =============================================
+    // MOBILE MENU
+    // =============================================
+    function initMobileMenu() {
+      const toggle = document.getElementById('menuToggle');
+      const menu = document.getElementById('mobileMenu');
+      let isOpen = false;
+      toggle.addEventListener('click', () => {
+        isOpen = !isOpen;
+        menu.classList.toggle('open', isOpen);
+      });
+    }
+
+    // =============================================
+    // WHATSAPP LINKS
+    // =============================================
+    function initWhatsAppLinks() {
+      const floatingBtn = document.getElementById('floatingWhatsapp');
+      floatingBtn.href = getWhatsAppLink('Hello, I want to make an order from LILYGOLD PLUS');
+      const ctaBtn = document.getElementById('ctaWhatsapp');
+      ctaBtn.href = getWhatsAppLink('Hello, I want to make an order from LILYGOLD PLUS');
+    }
+
+    // =============================================
+    // INIT
+    // =============================================
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCategories();
+      renderProducts(false);
+      initMobileMenu();
+      initWhatsAppLinks();
+      lucide.createIcons();
+      requestAnimationFrame(() => {
+        document.body.classList.add('page-loaded');
+      });
+    });
+  </script>
+</body>
+</html>
